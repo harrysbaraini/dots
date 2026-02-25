@@ -1,0 +1,83 @@
+ZSH_DISABLE_MAGIC_FUNCTIONS="true"
+ZSH_DISABLE_COMPFIX="true"
+
+export EDITOR=nvim
+export COLORTERM=truecolor
+
+# Silently ignore duplicate paths
+typeset -U path
+
+# Add Homebrew completions
+{{- if (stat ("/opt/homebrew/bin/brew")) }}
+FPATH=$(/opt/homebrew/bin/brew --prefix)/share/zsh-completions:$FPATH
+{{- end }}
+
+# Oh My Zsh
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="vansdev"
+plugins=(git zsh-autosuggestions)
+
+source "$ZSH/oh-my-zsh.sh"
+
+# Autosuggest settings
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#663399,standout"
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+#-----------------
+# Paths
+#-----------------
+
+# Paths configuration
+[[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
+[[ -d "$HOME/.local/sbin" ]] && path+=("$HOME/.local/sbin")
+[[ -d "$HOME/.opencode/bin" ]] && path+=("$HOME/.opencode/bin")
+[[ -d "$HOME/.config/scripts" ]] && path+=("$HOME/.config/scripts")
+[[ -d "$HOME/.antigravity/antigravity/bin" ]] && path+=("$HOME/.antigravity/antigravity/bin")
+
+#-----------------
+# Integrations
+#-----------------
+
+# WezTerm - zsh integration
+[[ -f "$HOME/.config/wezterm/wezterm.sh" ]] && . "$HOME/.config/wezterm/wezterm.sh"
+
+#--------------------
+# Mise-en-place
+#--------------------
+
+{{- if lookPath "mise" }}
+{{ output "mise" "activate" "zsh" }}
+alias mr="mise run"
+{{- end }}
+
+#--------------------
+# Atuin
+#--------------------
+
+{{- if lookPath "atuin" }}
+. "$HOME/.atuin/bin/env"
+{{ output "atuin" "init" "zsh" }}
+{{- end }}
+
+#--------------------
+# Starship
+#--------------------
+
+{{- if lookPath "starship" }}
+{{ output "starship" "init" "zsh" }}
+{{- end }}
+
+#--------------------
+# Zoxide
+#--------------------
+
+{{- if lookPath "zoxide" }}
+{{ output "zoxide" "init" "zsh" }}
+{{- end }}
+
+# Bun
+{{- if (stat (joinPath .chezmoi.homeDir ".bun")) }}
+export BUN_INSTALL="$HOME/.bun"
+path+=("$BUN_INSTALL/bin")
+{{- end }}
