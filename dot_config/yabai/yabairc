@@ -1,0 +1,94 @@
+#!/usr/bin/env sh
+
+sudo yabai --load-sa
+
+#
+# for this to work you must configure sudo such that
+# it will be able to run the command without password
+#
+# see this wiki page for information:
+#  - https://github.com/asmvik/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
+#
+# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# sudo yabai --load-sa
+#
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# Set layout to stacking (maximized windows by default)
+yabai -m config layout stack
+yabai -m config window_placement second_child
+
+# Now, initialize every space to stacking mode
+# This ensures every app you open takes up the full space by default
+for space_index in $(yabai -m query --spaces | jq '.[] | .index'); do
+  yabai -m space "$space_index" --layout stacking
+done
+
+# focus window after active space changes
+yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# focus window after active display changes
+# yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# Show shadows on floating windows
+yabai -m config window_shadow float
+
+# Enable window opacity
+yabai -m config window_opacity on
+
+# Set the opacity for the active window (usually 1.0 for full focus)
+yabai -m config active_window_opacity 1.0
+
+# Set the opacity for all other windows (0.4 to 0.8 is the "sweet spot")
+yabai -m config normal_window_opacity 0.85
+
+# Duration of the fade animation in seconds (0.0 to disable)
+yabai -m config window_opacity_duration 0.15
+
+# Add gaps so windows don't touch the screen edges
+yabai -m config top_padding 2
+yabai -m config bottom_padding 2
+yabai -m config left_padding 2
+yabai -m config right_padding 2
+yabai -m config window_gap 2
+
+yabai -m config external_bar all:36:0
+
+# Mouse support: Hold 'fn' or 'ctrl+alt' to drag/resize windows
+yabai -m config mouse_modifier fn
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+
+# Initialize spaces
+
+# Nomes predefinidos para os seus espaços
+NAMES=("VSA" "VLM" "JUI" "MSW" "KDG" "XYZ")
+
+setup_spaces() {
+  local target_count=${#NAMES[@]}
+
+  echo "Configuring spaces: Target count = $target_count"
+
+  local current_count=$(yabai -m query --spaces | jq '. | length')
+
+  # 1. Cria os espaços que faltam
+  if [ "$current_count" -lt "$target_count" ]; then
+    for i in $(seq 1 $((target_count - current_count))); do
+      yabai -m space --create
+    done
+  elif [ "$current_count" -gt "$target_count" ]; then
+    # Opcional: Remove excessos (cuidado: fecha espaços com janelas)
+    for i in $(seq $((target_count + 1)) "$current_count"); do
+      yabai -m space "$target_count" --destroy
+    done
+  fi
+
+  # 2. Atribui os nomes (labels) para cada espaço na ordem
+  for i in "${!NAMES[@]}"; do
+    local space_idx=$((i + 1))
+    yabai -m space "$space_idx" --label "${NAMES[$i]}"
+  done
+}
+
+setup_spaces
