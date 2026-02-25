@@ -1,7 +1,7 @@
 layout {
     default_tab_template {
         pane size=1 borderless=true {
-            plugin location="file:$HOME/.local/shared/zellij/plugins/zjstatus.wasm" {
+            plugin location="file:$HOME/.local/share/zellij/plugins/zjstatus.wasm" {
                 format_right "#[fg=#16161e,bg=#565f89,bold]{mode}"
                 format_center "#[bg=#16161e]{pipe_zjstatus_hints}"
                 format_left "#[bg=#16161e]{tabs}#[fg=#565f89,bg=#16161e] • {session} "
