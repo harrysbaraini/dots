@@ -47,7 +47,7 @@ local resizeStep = 20
 
 for key, label in pairs(spaces) do
 	-- Focus on space - HYPER + [Number]
-	spaceMode:bind({}, key, function()
+	spaceMode:bind({}, key, nil, function()
 		utils.yabai("-m space --focus " .. label)
 		spaceMode:exit()
 	end)

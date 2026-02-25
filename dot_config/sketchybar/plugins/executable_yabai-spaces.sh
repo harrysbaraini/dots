@@ -10,15 +10,6 @@ color=${SPACE_COLORS[color_index]}
 
 # Update spaces position based on the current display
 display_width=$(yabai -m query --displays --display | jq '.frame.w')
-changed_display=false
-
-if [ "$display_width" -gt 3000 ] && [ "$SPACE_APPS_POSITION" = "left" ]; then
-  SPACE_APPS_POSITION="center"
-  changed_display=true
-elif [ "$SPACE_APPS_POSITION" = "center" ]; then
-  SPACE_APPS_POSITION="left"
-  changed_display=true
-fi
 
 if [ "$SPACE_APPS_POSITION" = "left" ]; then
   sketchybar --set cosmic_sep drawing=on
