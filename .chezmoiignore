@@ -1,0 +1,11 @@
+{{- if ne .chezmoi.os "darwin" }}
+# Ignore mac-specific files on non-macOS systems
+.config/yabai
+.config/sketchybar
+.config/hammerspoon
+{{- end }}
+
+{{- if eq (env "DEV_CONTAINER") "true" }}
+# Ignore files and directories that are not relevant in a development container environment
+.config/wezterm
+{{- end }}
