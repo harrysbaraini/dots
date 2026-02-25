@@ -1,0 +1,36 @@
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="file:$HOME/.local/shared/zellij/plugins/zjstatus.wasm" {
+                format_right "#[fg=#16161e,bg=#565f89,bold]{mode}"
+                format_center "#[bg=#16161e]{pipe_zjstatus_hints}"
+                format_left "#[bg=#16161e]{tabs}#[fg=#565f89,bg=#16161e] • {session} "
+                format_space "#[bg=#16161e]"
+
+                border_enabled "false"
+
+                mode_normal        "#[fg=#565f89,bg=#16161e] ● {name} "
+                mode_locked        "#[fg=#565f89,bg=#16161e,bold]  {name} #[fg=#565f89,bg=#16161e] unlock with ctrl+g"
+                mode_resize        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_pane          "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_tab           "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_scroll        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_enter_search  "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_search        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_rename_tab    "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_rename_pane   "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_session       "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_move          "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_prompt        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
+                mode_tmux          "#[bg=#16161e,fg=#ff9e64]#[bg=#ff9e64,fg=#1f0f05] ● {name} "
+
+                pipe_zjstatus_hints_format "#[bg=#16161e]{output}"
+
+                tab_normal   "#[fg=#565f89,bg=#16161e] {name} "
+                tab_active   "#[bg=#16161e,fg=#292e42]#[fg=#5fadcf,bg=#292e42,bold] {name} #[bg=#16161e,fg=#292e42]"
+            }
+        }
+
+        children
+    }
+}
