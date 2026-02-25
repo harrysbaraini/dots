@@ -1,0 +1,5 @@
+# Zellij plugins
+
+[".local/share/zellij/plugins/zjstatus.wasm"]
+type = "file"
+url = "https://github.com/dj95/zjstatus/releases/download/v0.22.0/zjstatus.wasm"
