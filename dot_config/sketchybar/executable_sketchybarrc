@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+source "$HOME/.config/sketchybar/variables.sh"
+
+sketchybar --add event space_change space_windows_change front_app_switched display_change
+source "$ITEMS_DIR/defaults.sh"
+
+# Left
+source "$ITEMS_DIR/top_bar.sh"
+source "$ITEMS_DIR/workspaces.sh"
+
+# Right
+source "$ITEMS_DIR/clock.sh"
+source "$ITEMS_DIR/battery.sh"
+# source "$ITEMS_DIR/volume.sh"
+# source "$ITEMS_DIR/spotify.sh"
+# source "$ITEMS_DIR/bluetooth.sh"
+
+# Final launch
+
+sketchybar --update
+sketchybar --hotload
