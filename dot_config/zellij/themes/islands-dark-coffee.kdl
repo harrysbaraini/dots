@@ -1,0 +1,47 @@
+// Islands Relax Dark Coffee - Zellij Theme
+// Based on the JetBrains Islands Relax Dark Coffee theme by Panxiaoan
+//
+// Usage: Place this file at ~/.config/zellij/themes/islands-dark-coffee.kdl
+// Then in your zellij config.kdl:
+//   theme "islands-dark-coffee"
+
+themes {
+    islands-dark-coffee {
+        fg "#BBBBBB"       // primaryForeground
+        bg "#2C2122"       // primaryBackground
+        black "#201315"    // secondaryBackground (deepest tone)
+        red "#ff5554"      // Actions.Red
+        green "#2fc864"    // Actions.Green
+        yellow "#DBAB4A"   // accentColor (gold)
+        blue "#5da3f4"     // Actions.Blue
+        magenta "#bd93f9"  // Objects.Purple
+        cyan "#A96F79"     // underlineColor (muted rose)
+        white "#BBBBBB"    // primaryForeground
+        orange "#ff79c6"   // Objects.Pink (zellij uses orange for accents)
+
+frame_unselected {
+    base 110 69 82
+    background 187 187 187
+    emphasis_0 110 69 82
+    emphasis_1 187 187 187
+    emphasis_2 110 69 82
+    emphasis_3 187 187 187
+}
+frame_selected {
+    base 219 171 74
+    background 44 33 34
+    emphasis_0 219 171 74
+    emphasis_1 187 187 187
+    emphasis_2 219 171 74
+    emphasis_3 187 187 187
+}
+frame_highlight {
+    base 169 111 121
+    background 32 19 21
+    emphasis_0 169 111 121
+    emphasis_1 187 187 187
+    emphasis_2 169 111 121
+    emphasis_3 187 187 187
+}
+    }
+}

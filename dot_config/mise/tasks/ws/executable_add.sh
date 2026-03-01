@@ -57,7 +57,7 @@ fi
 mkdir -p "$WORKSPACE_PATH"
 
 # Create the vars.yaml file with the necessary variables for templates
-cat > "$WORKSPACE_PATH/vars.yaml" <<EOL
+cat >"$WORKSPACE_PATH/vars.yaml" <<EOL
 project_id: ${WS_PROJECT_ID}
 workspace_id: ${WS_WORKSPACE_ID}
 gh_token: ${WS_GH_TOKEN}

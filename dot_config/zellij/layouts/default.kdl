@@ -2,32 +2,32 @@ layout {
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="file:$HOME/.local/share/zellij/plugins/zjstatus.wasm" {
-                format_right "#[fg=#16161e,bg=#565f89,bold]{mode}"
-                format_center "#[bg=#16161e]{pipe_zjstatus_hints}"
-                format_left "#[bg=#16161e]{tabs}#[fg=#565f89,bg=#16161e] • {session} "
-                format_space "#[bg=#16161e]"
+                format_right "#[fg=#201315,bg=#A96F79,bold]{mode}"
+                format_center "#[bg=#201315]{pipe_zjstatus_hints}"
+                format_left "#[bg=#201315]{tabs}#[fg=#A96F79,bg=#201315] • {session} "
+                format_space "#[bg=#201315]"
 
                 border_enabled "false"
 
-                mode_normal        "#[fg=#565f89,bg=#16161e] ● {name} "
-                mode_locked        "#[fg=#565f89,bg=#16161e,bold]  {name} #[fg=#565f89,bg=#16161e] unlock with ctrl+g"
-                mode_resize        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_pane          "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_tab           "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_scroll        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_enter_search  "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_search        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_rename_tab    "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_rename_pane   "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_session       "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_move          "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_prompt        "#[bg=#16161e,fg=#23698a]#[fg=#abcfef,bg=#23698a] ● {name} "
-                mode_tmux          "#[bg=#16161e,fg=#ff9e64]#[bg=#ff9e64,fg=#1f0f05] ● {name} "
+                mode_normal        "#[fg=#A96F79,bg=#201315] ● {name} "
+                mode_locked        "#[fg=#A96F79,bg=#201315,bold]  {name} #[fg=#A96F79,bg=#201315] unlock with ctrl+g"
+                mode_resize        "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_pane          "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_tab           "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_scroll        "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_enter_search  "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_search        "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_rename_tab    "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_rename_pane   "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_session       "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_move          "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_prompt        "#[bg=#201315,fg=#6E4552]#[fg=#BBBBBB,bg=#6E4552] ● {name} "
+                mode_tmux          "#[bg=#201315,fg=#DBAB4A]#[bg=#DBAB4A,fg=#201315] ● {name} "
 
-                pipe_zjstatus_hints_format "#[bg=#16161e]{output}"
+                pipe_zjstatus_hints_format "#[bg=#201315]{output}"
 
-                tab_normal   "#[fg=#565f89,bg=#16161e] {name} "
-                tab_active   "#[bg=#16161e,fg=#292e42]#[fg=#5fadcf,bg=#292e42,bold] {name} #[bg=#16161e,fg=#292e42]"
+                tab_normal   "#[fg=#858994,bg=#201315] {name} "
+                tab_active   "#[bg=#201315,fg=#6E4552]#[fg=#DBAB4A,bg=#6E4552,bold] {name} #[bg=#201315,fg=#6E4552]"
             }
         }
 

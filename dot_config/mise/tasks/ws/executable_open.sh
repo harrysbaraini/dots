@@ -11,7 +11,7 @@ if [ -z "$OPTIONS" ]; then
   exit 0
 fi
 
-export WS_ID=$(gum choose "$OPTIONS" --header "Select the workspace to start")
+export WS_ID=$(gum choose $OPTIONS --header "Select the workspace to start")
 
 if [ -z "$WS_ID" ]; then
   gum log --level error "No workspace selected."
@@ -26,3 +26,4 @@ if [ ! -d "$WS_PATH/.devcontainer" ]; then
 fi
 
 open -na "PhpStorm.app" --args "$WS_PATH"
+

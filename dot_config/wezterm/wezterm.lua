@@ -1,15 +1,15 @@
 local wezterm = require("wezterm")
 local mappings = require("modules.mappings")
-require("modules.themes")
 
-return {
+local theme_coffee = require("modules.theme-island-dark-coffee")
+
+local config = {
 	default_prog = { "/bin/zsh", "-l", "-c", "zellij" },
 	default_cwd = wezterm.home_dir .. "/work",
 	default_cursor_style = "BlinkingBar",
 	cursor_blink_ease_in = "Constant",
 	cursor_blink_ease_out = "Constant",
 	cursor_blink_rate = 500,
-	color_scheme = "Kanagawa (Gogh)",
 	font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" }),
 	harfbuzz_features = { "calt=1", "clig=1", "liga=1" },
 	font_size = 16,
@@ -50,3 +50,7 @@ return {
 	max_fps = 240,
 	enable_kitty_graphics = true,
 }
+
+theme_coffee.apply_to_config(config)
+
+return config
