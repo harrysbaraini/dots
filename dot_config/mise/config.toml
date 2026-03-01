@@ -1,0 +1,44 @@
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = []
+
+[tools]
+# gum and envsubst for our tasks
+gum = "latest"
+envsubst = "latest"
+
+# TODO - Why?
+fd = "latest"
+# Fuzzy search used in scripts and neovim
+fzf = "latest"
+"github:composer/composer" = "latest"
+"github:dj95/zjstatus" = { version = "latest", asset_pattern = "zjstatus.wasm" }
+lazygit = "latest"
+"ubi:leg100/pug" = "latest"
+# A nice file explorer for the terminal
+yazi = "latest"
+aws = "latest"
+pnpm = "latest"
+node = "latest"
+npm = "latest"
+# A smarter `cd`
+zoxide = "latest"
+cmake = "latest"
+"asdf:neovim" = "nightly"
+ripgrep = "15.1.0"
+codex = "latest"
+chezmoi = "2.69.4"
+step = "latest"
+rust = "latest"
+devcontainer-cli = "latest"
+uv = "latest"
+gomplate = "latest"
+
+[tools."http:php"]
+version = "8.4.12"
+bin = "php"
+
+[tools."http:php".platforms]
+macos-arm64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-macos-aarch64.tar.gz" }
+macos-x64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-macos-x86_64.tar.gz" }
+linux-x64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-linux-x86_64.tar.gz" }
