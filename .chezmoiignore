@@ -9,3 +9,6 @@
 # Ignore files and directories that are not relevant in a development container environment
 .config/wezterm
 {{- end }}
+
+# Ignore oh-my-zsh caches
+.oh-my-zsh/cache
