@@ -7,106 +7,106 @@ local icon_map = {}
 
 -- Map: app display name (case-insensitive) → ligature string for sketchybar-app-font
 local map = {
-  ["default"]           = "default",  
+	["default"] = "default",
 
-  -- Terminals
-  ["wezterm"]           = "wezterm",
-  ["wezterm-gui"]       = "wezterm",
-  ["terminal"]          = "terminal",
+	-- Terminals
+	["wezterm"] = "wezterm",
+	["wezterm-gui"] = "wezterm",
+	["terminal"] = "terminal",
 
-  -- Editors / IDEs
-  ["code"]              = "code",
-  ["zed"]               = "zed",
-  ["phpstorm"]          = "phpstorm",
-  ["neovide"]           = "neovide",
-  ["antigravity"]       = "antigravity",
-  
-  -- Browsers
-  ["dia"]               = "dia",
-  ["firefox"]           = "firefox",
-  ["google chrome"]     = "google-chrome",
-  ["chromium"]          = "chromium",
-  ["safari"]            = "safari",
-  ["opera"]             = "opera",
-  ["brave browser"]     = "brave",
-  ["microsoft edge"]    = "microsoft-edge",
-  ["zen browser"]       = "zen-browser",
+	-- Editors / IDEs
+	["code"] = "code",
+	["zed"] = "zed",
+	["PhpStorm"] = "phpstorm",
+	["neovide"] = "neovide",
+	["antigravity"] = "antigravity",
 
-  -- Communication
-  ["slack"]             = "slack",
-  ["discord"]           = "discord",
-  ["telegram"]          = "telegram",
-  ["whatsapp"]          = "whatsapp",
-  ["messages"]          = "messages",
-  ["facetime"]          = "facetime",
-  ["zoom"]              = "zoom",
-  ["microsoft teams"]   = "microsoft-teams",
-  ["skype"]             = "skype",
+	-- Browsers
+	["dia"] = "dia",
+	["firefox"] = "firefox",
+	["google chrome"] = "google-chrome",
+	["chromium"] = "chromium",
+	["safari"] = "safari",
+	["opera"] = "opera",
+	["brave browser"] = "brave",
+	["microsoft edge"] = "microsoft-edge",
+	["zen browser"] = "zen-browser",
 
-  -- Mail
-  ["proton mail"]       = "proton-mail",
-  ["mail"]              = "mail",
-  ["airmail 5"]         = "airmail",
-  ["mimestream"]        = "mimestream",
-  ["spark"]             = "spark",
+	-- Communication
+	["slack"] = "slack",
+	["discord"] = "discord",
+	["telegram"] = "telegram",
+	["whatsapp"] = "whatsapp",
+	["messages"] = "messages",
+	["facetime"] = "facetime",
+	["zoom"] = "zoom",
+	["microsoft teams"] = "microsoft-teams",
+	["skype"] = "skype",
 
-  -- Productivity
-  ["notion"]            = "notion",
-  ["obsidian"]          = "obsidian",
-  ["linear"]            = "linear",
-  ["jira"]              = "jira",
-  ["confluence"]        = "confluence",
-  ["figma"]             = "figma",
-  ["sketch"]            = "sketch",
-  ["affinity designer"] = "affinity-designer",
-  ["affinity photo"]    = "affinity-photo",
+	-- Mail
+	["proton mail"] = "proton-mail",
+	["mail"] = "mail",
+	["airmail 5"] = "airmail",
+	["mimestream"] = "mimestream",
+	["spark"] = "spark",
 
-  -- Password managers
-  ["proton pass"]       = "proton-pass",
-  ["1password 7"]       = "1password",
-  ["1password"]         = "1password",
-  ["bitwarden"]         = "bitwarden",
+	-- Productivity
+	["notion"] = "notion",
+	["obsidian"] = "obsidian",
+	["linear"] = "linear",
+	["jira"] = "jira",
+	["confluence"] = "confluence",
+	["figma"] = "figma",
+	["sketch"] = "sketch",
+	["affinity designer"] = "affinity-designer",
+	["affinity photo"] = "affinity-photo",
 
-  -- Music / Media
-  ["spotify"]           = "spotify",
-  ["music"]             = "music",
-  ["podcasts"]          = "podcasts",
-  ["plex"]              = "plex",
+	-- Password managers
+	["proton pass"] = "proton-pass",
+	["1password 7"] = "1password",
+	["1password"] = "1password",
+	["bitwarden"] = "bitwarden",
 
-  -- Utilities
-  ["finder"]            = "finder",
-  ["system preferences"] = "system-preferences",
-  ["system settings"]   = "system-preferences",
-  ["activity monitor"]  = "activity-monitor",
-  ["console"]           = "console",
-  ["keychain access"]   = "keychain-access",
-  ["disk utility"]      = "disk-utility",
-  ["textedit"]          = "textedit",
-  ["notes"]             = "notes",
-  ["reminders"]         = "reminders",
-  ["calendar"]          = "calendar",
-  ["contacts"]          = "contacts",
-  ["photos"]            = "photos",
-  ["preview"]           = "preview",
-  ["vlc"]               = "vlc",
+	-- Music / Media
+	["spotify"] = "spotify",
+	["music"] = "music",
+	["podcasts"] = "podcasts",
+	["plex"] = "plex",
 
-  -- Window managers / system
-  ["dia"]               = "dia",
-  ["raycast"]           = "raycast",
-  ["alfred"]            = "alfred",
-  ["bartender 4"]       = "bartender",
-  ["stats"]             = "stats",
+	-- Utilities
+	["finder"] = "finder",
+	["system preferences"] = "system-preferences",
+	["system settings"] = "system-preferences",
+	["activity monitor"] = "activity-monitor",
+	["console"] = "console",
+	["keychain access"] = "keychain-access",
+	["disk utility"] = "disk-utility",
+	["textedit"] = "textedit",
+	["notes"] = "notes",
+	["reminders"] = "reminders",
+	["calendar"] = "calendar",
+	["contacts"] = "contacts",
+	["photos"] = "photos",
+	["preview"] = "preview",
+	["vlc"] = "vlc",
+
+	-- Window managers / system
+	["dia"] = "dia",
+	["raycast"] = "raycast",
+	["alfred"] = "alfred",
+	["bartender 4"] = "bartender",
+	["stats"] = "stats",
 }
 
 -- Return the ligature string for a given app name, or fallback icon
 function icon_map.get(app_name)
-  if not app_name or app_name == "" then
-    return "default"
-  end
-  
-  local key = string.lower(app_name)
-  
-  return ":" .. (map[key] or "default") .. ":"
+	if not app_name or app_name == "" then
+		return "default"
+	end
+
+	local key = string.lower(app_name)
+
+	return ":" .. (map[key] or "default") .. ":"
 end
 
 return icon_map

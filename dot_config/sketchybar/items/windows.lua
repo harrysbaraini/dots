@@ -153,10 +153,15 @@ local function rehighlight(new_focused_id)
   local new_id = tostring(new_focused_id or "")
   if old_id == new_id then return end
 
+  -- Compute accent colors from current workspace
+  local accent = colors.workspace_accents[tonumber(current_ws)] or colors.wave_blue
+  local fg = colors.with_alpha(colors.old_white, 0.9)
+  local fg_muted = colors.with_alpha(accent, 0.60)
+
   -- De-highlight old focused window
   if old_id ~= "" and current_items[old_id] then
     current_items[old_id]:set({
-      icon  = { color = accent_fg_muted },
+      icon  = { color = fg_muted },
       label = { drawing = false },
     })
   end
@@ -169,7 +174,7 @@ local function rehighlight(new_focused_id)
       function(title)
         local t = truncate((title or ""):gsub("%s+$", ""), settings.title_max_chars)
         current_items[new_id]:set({
-          icon  = { color = accent_fg },
+          icon  = { color = fg },
           label = { string = t, drawing = t ~= "" },
         })
       end

@@ -62,7 +62,7 @@ local function update_pills(focused_id)
           },
           icon = {
             drawing = true,
-            color = colors.workspace_accents[i],
+            color = colors.with_alpha(p.accent, 0.85),
           },
           background = {
             drawing      = true,
