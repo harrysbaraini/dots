@@ -1,7 +1,7 @@
 # ~/.aerospace.toml
 
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffE6C384 inactive_color=0xff2A2A37 width=6.0'
+  'exec-and-forget /opt/hoembrew/bin/borders active_color=0xffE6C384 inactive_color=0xff2A2A37 width=6.0'
 ]
 
 start-at-login = true
@@ -33,7 +33,7 @@ inner.horizontal = 8
 inner.vertical = 8
 outer.left = 4
 outer.right = 4
-outer.top = [{ monitor."built-in.*" = 4 }, 38]
+outer.top = [{ monitor."built-in.*" = 8 }, 42]
 outer.bottom = 4
 
 [mode.main.binding]

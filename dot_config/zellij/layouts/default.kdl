@@ -27,7 +27,7 @@ layout {
                 pipe_zjstatus_hints_format "#[bg=#201315]{output}"
 
                 tab_normal   "#[fg=#858994,bg=#201315] {name} "
-                tab_active   "#[bg=#201315,fg=#6E4552]#[fg=#DBAB4A,bg=#6E4552,bold] {name} #[bg=#201315,fg=#6E4552]"
+                tab_active   "#[bg=#201315,fg=#DBAB4A]#[fg=#201315,bg=#DBAB4A,bold] {name} #[bg=#201315,fg=#DBAB4A]"
             }
         }
 

@@ -11,7 +11,7 @@ if [ -z "$OPTIONS" ]; then
   exit 0
 fi
 
-export WS_ID=$(gum choose "$OPTIONS" --header "Select the workspace to stop")
+export WS_ID=$(gum choose $OPTIONS --header "Select the workspace to stop")
 
 if [ -z "$WS_ID" ]; then
   gum log --level error "No workspace selected."
@@ -27,7 +27,7 @@ if [ ! -d ".devcontainer" ]; then
   exit 1
 fi
 
-docker compose -f .devcontainer/docker-compose.yml down --remove-orphans
+docker compose -f .devcontainer/docker-compose.yml stop
 
 if [ -f "./scripts/hook-post-stop.sh" ]; then
   gum log --level info "Running post-stop hook..."

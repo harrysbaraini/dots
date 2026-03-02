@@ -1,47 +1,149 @@
-// Islands Relax Dark Coffee - Zellij Theme
+// Islands Relax Dark Coffee - Complete Zellij Theme
 // Based on the JetBrains Islands Relax Dark Coffee theme by Panxiaoan
 //
-// Usage: Place this file at ~/.config/zellij/themes/islands-dark-coffee.kdl
-// Then in your zellij config.kdl:
-//   theme "islands-dark-coffee"
+// Place in your zellij config.kdl or import it.
+// Set: theme "islands-dark-coffee"
+//
+// Color palette reference:
+//   primaryBg:    44  33  34  (#2C2122)
+//   secondaryBg:  32  19  21  (#201315)
+//   mainBg:       60  48  49  (#3c3031)
+//   selection:   110  69  82  (#6E4552)
+//   fg:          187 187 187  (#BBBBBB)
+//   gold:        219 171  74  (#DBAB4A)  - accent
+//   rose:        169 111 121  (#A96F79)  - underline
+//   red:         255  85  84  (#ff5554)
+//   green:        47 200 100  (#2fc864)
+//   blue:         93 163 244  (#5da3f4)
+//   purple:      189 147 249  (#bd93f9)
+//   pink:        255 121 198  (#ff79c6)
+//   cyan:        139 233 253  (#8be9fd)
 
 themes {
-    islands-dark-coffee {
-        fg "#BBBBBB"       // primaryForeground
-        bg "#2C2122"       // primaryBackground
-        black "#201315"    // secondaryBackground (deepest tone)
-        red "#ff5554"      // Actions.Red
-        green "#2fc864"    // Actions.Green
-        yellow "#DBAB4A"   // accentColor (gold)
-        blue "#5da3f4"     // Actions.Blue
-        magenta "#bd93f9"  // Objects.Purple
-        cyan "#A96F79"     // underlineColor (muted rose)
-        white "#BBBBBB"    // primaryForeground
-        orange "#ff79c6"   // Objects.Pink (zellij uses orange for accents)
-
-frame_unselected {
-    base 110 69 82
-    background 187 187 187
-    emphasis_0 110 69 82
-    emphasis_1 187 187 187
-    emphasis_2 110 69 82
-    emphasis_3 187 187 187
-}
-frame_selected {
-    base 219 171 74
-    background 44 33 34
-    emphasis_0 219 171 74
-    emphasis_1 187 187 187
-    emphasis_2 219 171 74
-    emphasis_3 187 187 187
-}
-frame_highlight {
-    base 169 111 121
-    background 32 19 21
-    emphasis_0 169 111 121
-    emphasis_1 187 187 187
-    emphasis_2 169 111 121
-    emphasis_3 187 187 187
-}
+    islands_dark_coffee {
+        text_unselected {
+            base 187 187 187
+            background 44 33 34
+            emphasis_0 219 171 74
+            emphasis_1 93 163 244
+            emphasis_2 47 200 100
+            emphasis_3 189 147 249
+        }
+        text_selected {
+            base 187 187 187
+            background 110 69 82
+            emphasis_0 219 171 74
+            emphasis_1 93 163 244
+            emphasis_2 47 200 100
+            emphasis_3 189 147 249
+        }
+        ribbon_unselected {
+            base 110 69 82
+            background 169 111 121
+            emphasis_0 255 85 84
+            emphasis_1 187 187 187
+            emphasis_2 93 163 244
+            emphasis_3 189 147 249
+        }
+        ribbon_selected {
+            base 110 69 82
+            background 47 200 100
+            emphasis_0 255 85 84
+            emphasis_1 219 171 74
+            emphasis_2 189 147 249
+            emphasis_3 93 163 244
+        }
+        table_title {
+            base 47 200 100
+            background 0
+            emphasis_0 219 171 74
+            emphasis_1 93 163 244
+            emphasis_2 47 200 100
+            emphasis_3 189 147 249
+        }
+        table_cell_unselected {
+            base 187 187 187
+            background 44 33 34
+            emphasis_0 219 171 74
+            emphasis_1 93 163 244
+            emphasis_2 47 200 100
+            emphasis_3 189 147 249
+        }
+        table_cell_selected {
+            base 187 187 187
+            background 110 69 82
+            emphasis_0 219 171 74
+            emphasis_1 93 163 244
+            emphasis_2 47 200 100
+            emphasis_3 189 147 249
+        }
+        list_unselected {
+            base 187 187 187
+            background 44 33 34
+            emphasis_0 219 171 74
+            emphasis_1 93 163 244
+            emphasis_2 47 200 100
+            emphasis_3 189 147 249
+        }
+        list_selected {
+            base 187 187 187
+            background 110 69 82
+            emphasis_0 219 171 74
+            emphasis_1 93 163 244
+            emphasis_2 47 200 100
+            emphasis_3 189 147 249
+        }
+        frame_unselected {
+            base 60 48 49
+            background 187 187 187
+            emphasis_0 60 48 49
+            emphasis_1 187 187 187
+            emphasis_2 60 48 49
+            emphasis_3 187 187 187
+        }
+        frame_selected {
+            base 169 111 121
+            background 219 171 74
+            emphasis_0 60 48 49
+            emphasis_1 187 187 187
+            emphasis_2 60 48 49
+            emphasis_3 187 187 187
+        }
+        frame_highlight {
+            base 219 171 74
+            background 44 33 34
+            emphasis_0 219 171 74
+            emphasis_1 187 187 187
+            emphasis_2 219 171 74
+            emphasis_3 187 187 187
+        }
+        exit_code_success {
+            base 47 200 100
+            background 0
+            emphasis_0 93 163 244
+            emphasis_1 110 69 82
+            emphasis_2 189 147 249
+            emphasis_3 93 163 244
+        }
+        exit_code_error {
+            base 255 85 84
+            background 0
+            emphasis_0 219 171 74
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        multiplayer_user_colors {
+            player_1 189 147 249
+            player_2 93 163 244
+            player_3 0
+            player_4 219 171 74
+            player_5 139 233 253
+            player_6 0
+            player_7 255 85 84
+            player_8 0
+            player_9 0
+            player_10 0
+        }
     }
 }
