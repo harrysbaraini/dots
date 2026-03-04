@@ -25,7 +25,6 @@ end
 local function clear_windows()
   if next(current_items) ~= nil then
     sbar.remove("/win\\.item\\./")
-    sbar.remove("/win\\.sep\\./")
     sbar.remove("win.container")
     current_items = {}
   end
@@ -37,13 +36,13 @@ local function build_windows(ws_id, new_focused_win_id)
 
   -- aerospace list-windows outputs JSON; sbar.exec auto-parses JSON → Lua table
   local cmd = string.format(
-    "aerospace list-windows --workspace %s --json 2>/dev/null",
+    "sleep 0.1 && aerospace list-windows --workspace %s --json | jq 'sort_by(.[\"window-id\"])' 2>/dev/null",
     ws_id
   )
 
   -- determine colors from workspace
   local accent = colors.workspace_accents[tonumber(ws_id)] or colors.wave_blue
-  local accent_bg = colors.with_alpha(accent, 0.15)
+  local accent_bg = colors.with_alpha(accent, 0.08)
   local accent_border = colors.with_alpha(accent, 0.30)
   local accent_fg = colors.with_alpha(colors.old_white, 0.9)
   local accent_fg_muted = colors.with_alpha(accent, 0.60)
@@ -68,26 +67,6 @@ local function build_windows(ws_id, new_focused_win_id)
 
       local is_focused = (win_id == tostring(fwd or ""))
       local app_icon   = icon_map.get(app)
-
-      -- Separator between window items
-      if not is_first then
-        local sep_name = "win.sep." .. win_id
-        sbar.add("item", sep_name, {
-          position = "left",
-          padding_left  = 0,
-          padding_right = 0,
-          icon = {
-            string        = "│",
-            color         = accent_border,
-            padding_left  = 1,
-            padding_right = 1,
-          },
-          label      = { drawing = false },
-          background = { drawing = false },
-        })
-        table.insert(member_names, sep_name)
-      end
-      is_first = false
 
       local label_str   = ""
       local label_draw  = false
@@ -138,7 +117,7 @@ local function build_windows(ws_id, new_focused_win_id)
         background = {
           color         = accent_bg,
           border_color  = accent_border,
-          border_width  = 1,
+          border_width  = 0,
           corner_radius = settings.item.corner_radius,
           height        = settings.item.height,
         },
@@ -175,7 +154,7 @@ local function rehighlight(new_focused_id)
         local t = truncate((title or ""):gsub("%s+$", ""), settings.title_max_chars)
         current_items[new_id]:set({
           icon  = { color = fg },
-          label = { string = t, drawing = t ~= "" },
+          label = { string = t },
         })
       end
     )
@@ -203,7 +182,7 @@ end)
 -- front_app_switched carries the new app name in env.INFO
 -- We use it as an opportunity to re-highlight cheaply
 sentinel:subscribe("front_app_switched", function(_)
-  sbar.exec("aerospace list-windows --focused --format '%{window-id}' 2>/dev/null", function(id)
+  sbar.exec("sleep 0.1 && aerospace list-windows --focused --format '%{window-id}' 2>/dev/null", function(id)
     local new_id = (id or ""):gsub("%s+", "")
     -- Try fast path first; if the window isn't in our map, do a full rebuild
     if current_items[new_id] then

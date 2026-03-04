@@ -27,6 +27,7 @@ local settings = {
 		ids = { "1", "2", "3", "4", "5", "6" },
 		labels = { "VSA", "VLM", "JUI", "MSW", "KDG", "XYZ" },
 		icons = { "", "", "", "", "", "󰂓", "󰎶", "󰎹", "󰎼", "󰎡" },
+		circles = { "●", "○", "◉", "◎", "◌" },
 	},
 
 	-- Window title truncation length (chars before "…")

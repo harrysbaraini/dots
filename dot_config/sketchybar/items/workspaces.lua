@@ -24,14 +24,14 @@ for i, id in ipairs(ws_ids) do
       drawing       = false,
       string        = label,
       font          = { family = settings.font, style = "SemiBold", size = 12.0 },
-      color         = colors.old_white,
-      padding_left  = 8,
+      color         = colors.with_alpha(accent, 0.85),
+      padding_left  = 0,
       padding_right = 8,
     },
     icon = {
       drawing = true,
-      string = settings.workspaces.icons[i],
-      color = colors.with_alpha(colors.workspace_accents[i], 0.85),
+      string = settings.workspaces.circles[2],
+      color = colors.with_alpha(accent, 0.35),
       font = { family = settings.font, style = "SemiBold", size = 12.0 },
       padding_left  = 8,
       padding_right = 8,
@@ -40,7 +40,7 @@ for i, id in ipairs(ws_ids) do
       drawing       = false,
       color         = colors.with_alpha(accent, 0.16),
       border_color  = colors.with_alpha(accent, 0.38),
-      border_width  = 1,
+      border_width  = 0,
       corner_radius = settings.item.corner_radius,
       height        = settings.item.height,
     },
@@ -62,12 +62,13 @@ local function update_pills(focused_id)
           },
           icon = {
             drawing = true,
+            string = settings.workspaces.circles[1],
             color = colors.with_alpha(p.accent, 0.85),
           },
           background = {
             drawing      = true,
-            color        = colors.with_alpha(p.accent, 0.16),
-            border_color = colors.with_alpha(p.accent, 0.38),
+            color        = colors.with_alpha(p.accent, 0.06),
+            border_color = colors.with_alpha(p.accent, 0.18),
           },
         })
       end)
@@ -77,10 +78,11 @@ local function update_pills(focused_id)
           label = {
             drawing = false,
           },
-          -- icon = {
-          --   drawing = true,
-          --   color = colors.with_alpha(colors.workspace_accents[i], 0.25),
-          -- },
+          icon = {
+            drawing = true,
+            string = settings.workspaces.circles[2],
+            color = colors.with_alpha(p.accent, 0.35),
+          },
           background = {
             drawing = false,
           },
@@ -93,8 +95,8 @@ end
 -- ── Separator ─────────────────────────────────────────────────────────────────
 sbar.add("item", "ws_sep", {
   position = "left",
-  padding_left  = 4,
-  padding_right = 4,
+  padding_left  = 0,
+  padding_right = 8,
   icon = {
     string        = "│",
     color         = colors.with_alpha(colors.fg_dim, 0.30),
