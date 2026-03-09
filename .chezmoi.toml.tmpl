@@ -1,2 +1,65 @@
 [hooks.read-source-state.pre]
 command = ".local/share/chezmoi/.install-password-manager.sh"
+
+[data]
+brave_homepage = "https://kagi.com"
+
+brave_extensions_forced = [
+    # Kagi Search
+    "cdglnehniifkbagbbombnjghhcihifij",
+    # Claude in Chrome
+    "fcoeoabgfenejglbffodgkkbkcdhcgfn",
+    # LanguageTool
+    "oldceeleldhonbafppcapldpdifcinji",
+    # Clockwork
+    "dmggabnehkmmfmdffgajcflpdjlnoemp"
+]
+
+brave_extensions_removable = [
+    # Proton Pass
+    "ghmbeldphafepmbegfdlkpapadhbakde",
+    # 1Password
+    "gejiddohjgogedgjnonbofjigllpkmbf",
+    # RainDrop.io
+    "ldgfbffkinooeloadekpmfoklnobpien",
+]
+
+[[data.brave_profiles]]
+dir = "Default"
+name = "Personal"
+avatar_index = 82
+color_scheme2 = 0
+color_variant2 = 2
+user_color2 = -205879
+ntp_background_type = "color"
+ntp_background_value = "linear-gradient(125.83deg, #403631 0%, #211d1c 99.09%)"
+
+[[data.brave_profiles]]
+dir = "Profile Valley Metro"
+name = "Valley Metro"
+avatar_index = 81
+color_scheme2 = 0
+color_variant2 = 1
+user_color2 = -1714692
+ntp_background_type = "color"
+ntp_background_value = "linear-gradient(125.83deg, #7B2D8B 0%, #4A148C 99.09%)"
+
+[[data.brave_profiles]]
+dir = "Profile Juiced"
+name = "Juiced"
+avatar_index = 77
+color_scheme2 = 0
+color_variant2 = 2
+user_color2 = -806210
+ntp_background_type = "color"
+ntp_background_value = "linear-gradient(130.39deg, #FE6F4C 9.83%, #C53646 85.25%)"
+
+[[data.brave_profiles]]
+dir = "Profile KDG"
+name = "KDG"
+avatar_index = 79
+color_scheme2 = 0
+color_variant2 = 2
+user_color2 = -7558172
+ntp_background_type = "color"
+ntp_background_value = "linear-gradient(125.83deg, #3B82F6 0%, #1A237E 99.09%)"

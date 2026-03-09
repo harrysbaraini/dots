@@ -28,7 +28,7 @@ local map = {
 	["chromium"] = "chromium",
 	["safari"] = "safari",
 	["opera"] = "opera",
-	["brave browser"] = "brave",
+	["brave browser"] = "brave_browser",
 	["microsoft edge"] = "microsoft-edge",
 	["zen browser"] = "zen-browser",
 
@@ -91,7 +91,6 @@ local map = {
 	["vlc"] = "vlc",
 
 	-- Window managers / system
-	["dia"] = "dia",
 	["raycast"] = "raycast",
 	["alfred"] = "alfred",
 	["bartender 4"] = "bartender",

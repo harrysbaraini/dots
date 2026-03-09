@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- ==================== -->
+	<!-- Debloat: AI          -->
+	<!-- ==================== -->
+	<key>BraveAIChatEnabled</key>
+	<false/>
+
+	<!-- ==================== -->
+	<!-- Debloat: Web3/Crypto -->
+	<!-- ==================== -->
+	<key>BraveWalletDisabled</key>
+	<true/>
+
+	<!-- ==================== -->
+	<!-- Debloat: Rewards/Ads -->
+	<!-- ==================== -->
+	<key>BraveRewardsDisabled</key>
+	<true/>
+
+	<!-- ==================== -->
+	<!-- Debloat: VPN         -->
+	<!-- ==================== -->
+	<key>BraveVPNDisabled</key>
+	<true/>
+
+	<!-- ==================== -->
+	<!-- Debloat: Other       -->
+	<!-- ==================== -->
+	<key>BraveTalkDisabled</key>
+	<true/>
+	<key>BraveNewsDisabled</key>
+	<true/>
+	<key>BraveWaybackMachineDisabled</key>
+	<true/>
+	<key>TorDisabled</key>
+	<true/>
+
+	<!-- ==================== -->
+	<!-- Homepage / Startup   -->
+	<!-- ==================== -->
+	<key>HomepageLocation</key>
+	<string>{{ .brave_homepage | default "https://kagi.com" }}</string>
+	<key>HomepageIsNewTabPage</key>
+	<false/>
+	<key>ShowHomeButton</key>
+	<false/>
+	<key>NewTabPageLocation</key>
+	<string>{{ .brave_homepage | default "https://kagi.com" }}</string>
+
+	<!-- Restore previous session on startup -->
+	<key>RestoreOnStartup</key>
+	<integer>1</integer>
+
+	<!-- ==================== -->
+	<!-- Toolbar / UI         -->
+	<!-- ==================== -->
+	<key>BookmarkBarEnabled</key>
+	<false/>
+	<key>BrowserSignin</key>
+	<integer>0</integer>
+	<key>SidePanelEnabled</key>
+	<true/>
+
+	<!-- ==================== -->
+	<!-- Telemetry / Privacy  -->
+	<!-- ==================== -->
+	<key>MetricsReportingEnabled</key>
+	<false/>
+	<key>UrlKeyedAnonymizedDataCollectionEnabled</key>
+	<false/>
+	<key>SpellCheckServiceEnabled</key>
+	<false/>
+	<key>SearchSuggestEnabled</key>
+	<false/>
+	<key>AlternateErrorPagesEnabled</key>
+	<false/>
+	<key>NetworkPredictionOptions</key>
+	<integer>2</integer>
+
+	<!-- ==================== -->
+	<!-- Extensions / Plugins -->
+	<!-- ==================== -->
+	<key>ExtensionInstallForcelist</key>
+	<array>
+{{- range .brave_extensions_forced }}
+		<string>{{ . }};https://clients2.google.com/service/update2/crx</string>
+{{- end }}
+	</array>
+	<key>ExtensionSettings</key>
+	<dict>
+{{- range .brave_extensions_removable }}
+		<key>{{ . }}</key>
+		<dict>
+			<key>installation_mode</key>
+			<string>normal_installed</string>
+			<key>update_url</key>
+			<string>https://clients2.google.com/service/update2/crx</string>
+		</dict>
+{{- end }}
+	</dict>
+</dict>
+</plist>
+

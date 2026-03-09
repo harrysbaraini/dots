@@ -1,0 +1,94 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+BRAVE_DIR="$HOME/Library/Application Support/BraveSoftware/Brave-Browser"
+
+if ! command -v jq &> /dev/null; then
+    echo "⚠ jq not found — skipping Brave profile configuration"
+    exit 0
+fi
+
+if pgrep -x "Brave Browser" > /dev/null 2>&1; then
+    echo "⚠ Brave is running — skipping profile configuration (close Brave and re-run)"
+    exit 0
+fi
+
+apply_profile() {
+    local profile_dir="$1"
+    local profile_name="$2"
+    local desired_json="$3"
+    local target_dir="$BRAVE_DIR/$profile_dir"
+    local prefs="$target_dir/Preferences"
+    
+    if [ ! -d "$target_dir" ]; then
+        echo "→ Creating profile: $profile_name ($profile_dir)"
+        mkdir -p "$target_dir"
+        echo "$desired_json" > "$prefs"
+    else
+        echo "→ Patching profile: $profile_name ($profile_dir)"
+        local tmp
+        tmp=$(mktemp)
+        # Deep merge: existing prefs as base, desired prefs override
+        jq -s '.[0] * .[1]' "$prefs" <(echo "$desired_json") > "$tmp" \
+            && mv "$tmp" "$prefs"
+    fi
+
+    echo "✓ $profile_name ready"
+}
+
+{{ range .brave_profiles }}
+apply_profile '{{ .dir }}' '{{ .name }}' '{
+    "profile": {
+        "avatar_index": {{ .avatar_index }},
+        "name": "{{ .name }}"
+    },
+    "brave": {
+        "new_tab_page": {
+            "background": {
+                "random": false,
+                "selected_value": "{{ .ntp_background_value }}",
+                "type": "{{ .ntp_background_type }}"
+            },
+            "show_background_image": true,
+            "show_branded_background_image": false,
+            "show_brave_news": false,
+            "show_brave_vpn": false,
+            "show_clock": true,
+            "show_rewards": false,
+            "show_stats": false,
+            "show_together": false
+        },
+        "enable_window_closing_confirm": false
+    },
+    "browser": {
+        "show_home_button": false,
+        "show_bookmarks_bar": false,
+        "show_full_urls": false,
+        "show_search_engine_in_address_bar": false,
+        "show_status_bar": false,
+        "show_toolbar": false,
+        "theme": {
+            "color_scheme2": {{ .color_scheme2 }},
+            "color_variant2": {{ .color_variant2 }},
+            "user_color2": {{ .user_color2 }}
+        }
+    },
+    "default_search_provider_data": {
+        "mirrored_template_url_data": {
+            "favicon_url": "https://assets.kagi.com/v2/favicon-32x32.png",
+            "keyword": "@kagi",
+            "short_name": "Kagi",
+            "suggestions_url": "https://kagisuggest.com/api/autosuggest?q={searchTerms}",
+            "url": "https://kagi.com/search?q={searchTerms}"
+        }
+    }
+}'
+
+{{ end }}
+echo ""
+echo "Done. Open profiles with:"
+{{ range .brave_profiles }}
+echo '  open -na "Brave Browser" --args --profile-directory="{{ .dir }}"'
+{{ end }}
+{{ end -}}

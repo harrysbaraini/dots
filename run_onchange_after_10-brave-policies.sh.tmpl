@@ -1,0 +1,30 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# chezmoi:run_onchange hash:
+# {{ include ".chezmoitemplates/brave-policies.plist" | sha256sum }}
+
+set -euo pipefail
+
+echo "→ Installing Brave managed policies..."
+
+PLIST_DST="/Library/Managed Preferences/com.brave.Browser.plist"
+
+if [ ! -d "/Library/Managed Preferences" ]; then
+    sudo mkdir -p "/Library/Managed Preferences"
+    sudo chown root:wheel "/Library/Managed Preferences"
+    sudo chmod 755 "/Library/Managed Preferences"
+fi
+
+# Write the plist content inline
+sudo tee "$PLIST_DST" > /dev/null << 'PLIST'
+{{ template "brave-policies.plist" . }}
+PLIST
+
+sudo chown root:wheel "$PLIST_DST"
+sudo chmod 644 "$PLIST_DST"
+sudo killall cfprefsd 2>/dev/null || true
+
+echo "✓ Brave managed policies installed"
+echo "  Restart Brave and verify at brave://policy"
+{{ end -}}
+

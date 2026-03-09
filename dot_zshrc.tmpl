@@ -1,3 +1,7 @@
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+unset LC_ALL
+
 ZSH_DISABLE_MAGIC_FUNCTIONS="true"
 ZSH_DISABLE_COMPFIX="true"
 
@@ -47,6 +51,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 #--------------------
 
 {{- if lookPath "mise" }}
+export MISE_IGNORED_CONFIG_PATHS="$HOME/.local/share/chezmoi"
 {{ output "mise" "activate" "zsh" }}
 alias mr="mise run"
 {{- end }}
