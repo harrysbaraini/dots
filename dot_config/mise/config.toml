@@ -33,6 +33,7 @@ rust = "latest"
 devcontainer-cli = "latest"
 uv = "latest"
 gomplate = "latest"
+yq = "latest"
 
 [tools."http:php"]
 version = "8.4.12"

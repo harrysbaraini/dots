@@ -4,6 +4,7 @@ format = """
 $username\
 $hostname\
 $directory\
+$direnv \
 $git_branch\
 $git_state\
 $git_status\
@@ -11,6 +12,13 @@ $aws \
 $cmd_duration\
 $line_break\
 $character"""
+
+[direnv]
+disabled = false
+format = '[$loaded$allowed]($style) '
+loaded_msg = 'direnv'
+allowed_msg = ''
+not_allowed_msg = 'direnv not allowed'
 
 [directory]
 style = "blue"

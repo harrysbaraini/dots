@@ -81,8 +81,20 @@ alias mr="mise run"
 {{ output "zoxide" "init" "zsh" }}
 {{- end }}
 
+#--------------------
 # Bun
+#--------------------
+
 {{- if (stat (joinPath .chezmoi.homeDir ".bun")) }}
 export BUN_INSTALL="$HOME/.bun"
 path+=("$BUN_INSTALL/bin")
 {{- end }}
+
+#--------------------
+# Direnv
+#--------------------
+
+{{- if lookPath "direnv" }}
+{{ output "direnv" "hook" "zsh" }}
+{{- end }}
+
