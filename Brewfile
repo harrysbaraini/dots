@@ -103,6 +103,7 @@ brew "asmvik/formulae/yabai"
 brew "charmbracelet/tap/crush"
 brew "coder/coder/coder"
 brew "d12frosted/emacs-plus/emacs-plus@30", args: ["with-savchenkovaleriy-big-sur-curvy-3d-icon"]
+brew "direnv"
 brew "dotenvx/brew/dotenvx"
 brew "felixkratz/formulae/borders"
 brew "felixkratz/formulae/sketchybar"
