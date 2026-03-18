@@ -1,7 +1,7 @@
 # ~/.aerospace.toml
 
 after-startup-command = [
-  'exec-and-forget /opt/hoembrew/bin/borders active_color=0xffE6C384 inactive_color=0xff2A2A37 width=6.0'
+  'exec-and-forget /opt/homebrew/bin/borders active_color=0xffE6C384 inactive_color=0xff2A2A37 width=6.0'
 ]
 
 start-at-login = true

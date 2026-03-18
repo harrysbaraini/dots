@@ -1,0 +1,10 @@
+# Work hosts - use 1Password SSH agent
+Host al-brand-cms
+  HostName 52.5.246.208
+  User forge
+  IdentityFile ~/.ssh/id_ed25519
+
+Host vm-website-dev
+  HostName 24.144.102.117
+  User forge
+  IdentityFile ~/.ssh/id_ed25519

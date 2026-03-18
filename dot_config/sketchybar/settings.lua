@@ -25,7 +25,7 @@ local settings = {
 	-- Workspace pill display
 	workspaces = {
 		ids = { "1", "2", "3", "4", "5", "6" },
-		labels = { "VSA", "VLM", "JUI", "MSW", "KDG", "XYZ" },
+		labels = { "VSA", "VLM", "JUI", "KDG", "WS5", "WS6" },
 		icons = { "", "", "", "", "", "󰂓", "󰎶", "󰎹", "󰎼", "󰎡" },
 		circles = { "●", "○", "◉", "◎", "◌" },
 	},

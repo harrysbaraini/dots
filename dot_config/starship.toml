@@ -15,10 +15,11 @@ $character"""
 
 [direnv]
 disabled = false
-format = '[$loaded$allowed]($style) '
+format = '[$loaded $allowed]($style) '
 loaded_msg = 'direnv'
 allowed_msg = ''
-not_allowed_msg = 'direnv not allowed'
+unloaded_msg = 'direnv unnloaded'
+not_allowed_msg = '/ not allowed'
 
 [directory]
 style = "blue"

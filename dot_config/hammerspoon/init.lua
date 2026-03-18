@@ -3,10 +3,7 @@ package.path = package.path
 
 local utils = require("utils")
 
--- require("yabai")
--- require("window-switcher")
--- require("phpstorm")
--- require("wezterm")
+require("window-switch")
 
 -- Auto reload config
 function reloadConfig(files)

@@ -35,11 +35,11 @@ uv = "latest"
 gomplate = "latest"
 yq = "latest"
 
-[tools."http:php"]
-version = "8.4.12"
-bin = "php"
+# [tools."http:php"]
+# version = "8.4.12"
+# bin = "php"
 
-[tools."http:php".platforms]
-macos-arm64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-macos-aarch64.tar.gz" }
-macos-x64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-macos-x86_64.tar.gz" }
-linux-x64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-linux-x86_64.tar.gz" }
+# [tools."http:php".platforms]
+# macos-arm64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-macos-aarch64.tar.gz" }
+# macos-x64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-macos-x86_64.tar.gz" }
+# linux-x64 = { url = "https://dl.static-php.dev/static-php-cli/common/php-8.4.12-cli-linux-x86_64.tar.gz" }
