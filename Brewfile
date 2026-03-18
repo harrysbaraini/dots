@@ -23,6 +23,9 @@ tap "shivammathur/php"
 tap "symfony-cli/tap"
 
 # Install packages
+brew "atuin"
+
+
 # @TODO Filter and organize per category
 brew "jpeg-xl"
 brew "aom"
