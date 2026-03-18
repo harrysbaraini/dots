@@ -1,0 +1,39 @@
+;; Kanata docs
+;; https://github.com/jtroo/kanata/blob/main/docs/config.adoc
+
+;; OS key code mappings
+;; https://github.com/jtroo/kanata/blob/main/parser/src/keys/mod.rs
+
+(defcfg
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+    "vansdev Air75 V3"
+    "Air75 V3"
+  )
+
+  process-unmapped-keys yes
+  log-layer-changes no
+  danger-enable-cmd yes
+  concurrent-tap-hold yes
+)
+
+(defsrc
+  caps
+)
+
+(defvar
+  tap-time 200
+  hold-time 200
+  chord-time 60
+)
+
+(defalias
+  hyperkey (tap-hold-press $tap-time $hold-time esc (multi lsft lctl lalt lmet))
+)
+
+;; Main layer
+;; mappings that are not attached to specific workspaces / apps
+
+(deflayer main
+  @hyperkey
+)
