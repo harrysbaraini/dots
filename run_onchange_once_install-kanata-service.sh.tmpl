@@ -1,9 +1,23 @@
 #!/bin/bash
 set -e
 
-KANATA_BIN=$(which kanata)
+VERSION="1.11.0"
+
+KANATA_BIN="{{ .chezmoi.homeDir }}/.local/bin/kanata"
 CONFIG_PATH="{{ .chezmoi.homeDir }}/.config/kanata/kanata.kbd"
 PLIST_PATH="/Library/LaunchDaemons/com.kanata.daemon.plist"
+
+# Install Kanata with cmd enabled
+
+curl -L -o /tmp/kanata-macos.zip \
+  "https://github.com/jtroo/kanata/releases/download/v${VERSION}/macos-binaries-arm64.zip"
+
+unzip -o /tmp/kanata-macos.zip -d /tmp/kanata-macos
+mv /tmp/kanata-macos/kanata_macos_cmd_allowed_arm64 $KANATA_BIN
+chmod +x $KANATA_BIN
+rm -rf /tmp/kanata-macos /tmp/kanata-macos.zip
+
+# Add kanata to launch daemon
 
 echo "$(whoami) ALL=(root) NOPASSWD: /bin/launchctl, /usr/sbin/chown, /bin/chmod" \
   | sudo tee /etc/sudoers.d/kanata
