@@ -1,7 +1,15 @@
 local wezterm = require("wezterm")
 local mappings = require("modules.mappings")
 
-local theme_coffee = require("modules.theme-island-dark-coffee")
+-- Pick theme based on macOS appearance (auto-switches on system change)
+local function get_theme()
+	local appearance = wezterm.gui and wezterm.gui.get_appearance() or "Light"
+	if appearance:find("Dark") then
+		return require("modules.theme-dark")
+	else
+		return require("modules.theme-light")
+	end
+end
 
 local config = {
 	default_prog = { "/bin/zsh", "-l", "-c", "zellij" },
@@ -51,6 +59,6 @@ local config = {
 	enable_kitty_graphics = true,
 }
 
-theme_coffee.apply_to_config(config)
+get_theme().apply_to_config(config)
 
 return config

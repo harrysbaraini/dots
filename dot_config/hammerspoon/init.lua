@@ -4,6 +4,7 @@ package.path = package.path
 local utils = require("utils")
 
 require("window-switch")
+require("dark-mode-watcher")
 
 -- Auto reload config
 function reloadConfig(files)

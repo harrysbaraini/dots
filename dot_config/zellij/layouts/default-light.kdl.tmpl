@@ -1,0 +1,37 @@
+{{- $t := .theme.light -}}
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="file:$HOME/.local/share/zellij/plugins/zjstatus.wasm" {
+                format_right "#[fg={{ $t.bg_secondary }},bg={{ $t.accent }},bold]{mode}"
+                format_center "#[bg={{ $t.bg_secondary }}]{pipe_zjstatus_hints}"
+                format_left "#[bg={{ $t.bg_secondary }}]{tabs}#[fg={{ $t.accent }},bg={{ $t.bg_secondary }}] • {session} "
+                format_space "#[bg={{ $t.bg_secondary }}]"
+
+                border_enabled "false"
+
+                mode_normal        "#[fg={{ $t.accent }},bg={{ $t.bg_secondary }}] ● {name} "
+                mode_locked        "#[fg={{ $t.accent }},bg={{ $t.bg_secondary }},bold]  {name} #[fg={{ $t.accent }},bg={{ $t.bg_secondary }}] unlock with ctrl+g"
+                mode_resize        "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_pane          "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_tab           "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_scroll        "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_enter_search  "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_search        "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_rename_tab    "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_rename_pane   "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_session       "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_move          "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_prompt        "#[bg={{ $t.bg_secondary }},fg={{ $t.bg_selection }}]#[fg={{ $t.fg }},bg={{ $t.bg_selection }}] ● {name} "
+                mode_tmux          "#[bg={{ $t.bg_secondary }},fg={{ $t.accent }}]#[bg={{ $t.accent }},fg={{ $t.bg_secondary }}] ● {name} "
+
+                pipe_zjstatus_hints_format "#[bg={{ $t.bg_secondary }}]{output}"
+
+                tab_normal   "#[fg={{ $t.fg_secondary }},bg={{ $t.bg_secondary }}] {name} "
+                tab_active   "#[bg={{ $t.bg_secondary }},fg={{ $t.accent }}]#[fg={{ $t.bg_secondary }},bg={{ $t.accent }},bold] {name} #[bg={{ $t.bg_secondary }},fg={{ $t.accent }}]"
+            }
+        }
+
+        children
+    }
+}

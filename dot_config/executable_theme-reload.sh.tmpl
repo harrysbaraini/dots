@@ -1,0 +1,45 @@
+#!/bin/bash
+# Theme switcher: flips symlinks and restarts affected apps.
+# Usage: theme-reload.sh [dark|light]
+# If no argument, auto-detects from macOS appearance.
+
+MODE="${1:-$(defaults read -g AppleInterfaceStyle 2>/dev/null | tr '[:upper:]' '[:lower:]' || echo light)}"
+
+# --- Flip symlinks (relative where possible, absolute for cross-directory) ---
+# WezTerm uses native appearance detection (wezterm.gui.get_appearance),
+# no symlink needed — it switches instantly on its own.
+if [ "$MODE" = "dark" ]; then
+    ln -sf config-dark.kdl         "$HOME/.config/zellij/config.kdl"
+    ln -sf default-dark.kdl       "$HOME/.config/zellij/layouts/default.kdl"
+    ln -sf colors-dark.lua        "$HOME/.config/sketchybar/colors.lua"
+    ln -sf "$HOME/.config/aerospace/aerospace-dark.toml" "$HOME/.aerospace.toml"
+    ACCENT="{{ trimPrefix "#" .theme.dark.accent }}"
+    BORDER="{{ trimPrefix "#" .theme.dark.border }}"
+else
+    ln -sf config-light.kdl        "$HOME/.config/zellij/config.kdl"
+    ln -sf default-light.kdl      "$HOME/.config/zellij/layouts/default.kdl"
+    ln -sf colors-light.lua       "$HOME/.config/sketchybar/colors.lua"
+    ln -sf "$HOME/.config/aerospace/aerospace-light.toml" "$HOME/.aerospace.toml"
+    ACCENT="{{ trimPrefix "#" .theme.light.accent }}"
+    BORDER="{{ trimPrefix "#" .theme.light.border }}"
+fi
+
+# --- Restart borders ---
+if command -v borders >/dev/null 2>&1; then
+    pkill -x borders 2>/dev/null
+    sleep 0.3
+    /opt/homebrew/bin/borders \
+        active_color=0xff${ACCENT} \
+        inactive_color=0xff${BORDER} \
+        width=6.0 &
+fi
+
+# --- Reload sketchybar ---
+if command -v sketchybar >/dev/null 2>&1; then
+    sketchybar --reload 2>/dev/null || brew services restart sketchybar 2>/dev/null &
+fi
+
+# --- Reload aerospace ---
+if command -v aerospace >/dev/null 2>&1; then
+    aerospace reload-config 2>/dev/null
+fi

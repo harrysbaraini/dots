@@ -89,3 +89,10 @@ export BUN_INSTALL="$HOME/.bun"
 path+=("$BUN_INSTALL/bin")
 {{- end }}
 
+#-------------------
+# Kanata
+#------------------
+
+{{- if lookPath "kanata" }}
+alias kreload="sudo kill -USR1 $(pgrep kanata)"
+{{- end }}
