@@ -1,10 +1,12 @@
 package.path = package.path
-	.. ";/Users/vanderlei/.config/hammerspoon/modules/?.lua;/Users/vanderlei/.config/hammerspoon/modules/?/init.lua"
+	.. ";/Users/vanderlei/.hammerspoon/modules/?.lua;/Users/vanderlei/.hammerspoon/modules/?/init.lua"
 
 local utils = require("utils")
 
 require("window-switch")
 require("dark-mode-watcher")
+require("workspace-rules")
+require("url-router")
 
 -- Auto reload config
 function reloadConfig(files)

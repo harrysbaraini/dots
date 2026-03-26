@@ -8,3 +8,13 @@ Host vm-website-dev
   HostName 24.144.102.117
   User forge
   IdentityFile ~/.ssh/id_ed25519
+
+Host vm-website-preprod
+  HostName 159.223.176.177
+  User forge
+  IdentityFile ~/.ssh/id_ed25519
+
+Host vm-website-prod
+  HostName 167.99.154.186
+  User forge
+  IdentityFile ~/.ssh/id_ed25519
