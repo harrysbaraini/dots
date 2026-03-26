@@ -38,7 +38,9 @@ local rules = {
 	{ app = "Claude",  pattern = nil, workspace = "5" },
 }
 
--- Build a window-id → workspace cache from aerospace to avoid moving windows already in place
+-- Track which workspace each window was last placed on by us
+local placedWindows = {} -- winId → workspace
+
 local function getWindowWorkspaces()
 	local raw = utils.aerospace("list-windows --all --format '%{window-id} %{workspace}'")
 	local map = {}
@@ -66,8 +68,9 @@ local function matchRule(appName, title)
 	return nil
 end
 
--- Move a single window to its target workspace if needed
-local function placeWindow(win)
+-- Move a single window to its target workspace if needed.
+-- When focusAfter is true, also switch to the target workspace.
+local function placeWindow(win, focusAfter)
 	if not win or not win:isStandard() then return end
 
 	local app = win:application()
@@ -84,9 +87,15 @@ local function placeWindow(win)
 	local currentWs = currentMap[winId]
 
 	if currentWs == targetWs then return end
+	if placedWindows[winId] == targetWs then return end
 
 	utils.aerospace(string.format("move-node-to-workspace --window-id %d %s", winId, targetWs))
+	placedWindows[winId] = targetWs
 	print(string.format("[workspace-rules] Moved %s (%s) → workspace %s", appName, title:sub(1, 40), targetWs))
+
+	if focusAfter then
+		utils.aerospace(string.format("workspace %s", targetWs))
+	end
 end
 
 -- Re-evaluate all windows (used on screen change)
@@ -113,7 +122,7 @@ local wf = hs.window.filter.new(watchedApps)
 wf:subscribe(hs.window.filter.windowCreated, function(win)
 	-- Small delay to let the window title settle (especially Brave)
 	hs.timer.doAfter(0.5, function()
-		placeWindow(win)
+		placeWindow(win, true)
 	end)
 end)
 wf:subscribe(hs.window.filter.windowTitleChanged, placeWindow)
