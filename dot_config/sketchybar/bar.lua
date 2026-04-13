@@ -4,7 +4,7 @@ local settings = require("settings")
 sbar.bar({
 	position = "top",
 	height = settings.bar.height,
-	color = colors.with_alpha(colors.bg_base, 0.0),
+	color = colors.with_alpha(colors.bg_base, 1),
 	border_color = colors.with_alpha(colors.fg_dim, 0.0),
 	border_width = settings.bar.border_width,
 	shadow = false,
@@ -20,4 +20,3 @@ sbar.bar({
 	notch_width = 200,
 	notch_offset = 0,
 })
-

@@ -1,0 +1,99 @@
+name: "Valley Metro"
+container_max_width: "1100px"
+font_family: "M PLUS Code Latin"
+
+# Grid configuration
+grid:
+  columns: 4
+  gap: "1rem"
+
+# Theme colors using Tailwind color names
+dark_theme:
+  bg: "zinc-950"
+  bg_panel: "zinc-900"
+  border: "lime-800"
+  text: "zinc-100"
+  text_dimmed: "zinc-500"
+  text_accent: "lime-400"
+  success: "green-500"
+  success_dimmed: "green-900"
+  warning: "yellow-500"
+  warning_dimmed: "yellow-900"
+  danger: "red-500"
+  danger_dimmed: "red-900"
+  info: "blue-500"
+  info_dimmed: "blue-900"
+
+# Optional light theme (defaults to inverted dark if not specified)
+# light_theme:
+#   bg: "zinc-50"
+#   ...
+
+# Widget definitions
+widgets:
+  # Date/Time widget - top left, spans 2 columns
+  - type: "clock"
+    label: "Phoenix"
+    row: 1
+    col: 1
+    col_span: 2
+    settings:
+      timezone: "America/Phoenix"
+      format_24h: false
+      show_seconds: false
+      show_date: true
+  - type: "clock"
+    label: "Joinville"
+    row: 1
+    col: 3
+    col_span: 2
+    settings:
+      timezone: "America/Sao_Paulo"
+      format_24h: false
+      show_seconds: false
+      show_date: true
+
+  # Bookmarks widget - bottom, full width
+  - type: "bookmarks"
+    label: "links"
+    row: 2
+    col: 1
+    col_span: 4
+    settings:
+      columns: 3
+      groups:
+        - name: "github"
+          links:
+            - label: "website repo"
+              url: "https://github.com/valleymetro/valley-metro-vulcan"
+            - label: "website PRs"
+              url: "https://github.com/valleymetro/valley-metro-vulcan/pulls"
+            - label: "api repo"
+              url: "https://github.com/valleymetro/valley-metro-api"
+            - label: "api PRs"
+              url: "https://github.com/valleymetro/valley-metro-api/pulls"
+        - name: "forge"
+          links:
+            - label: "forge - website - dev"
+              url: "https://forge.laravel.com/vm-dev/valley-metro-dev"
+            - label: "forge - website - preprod"
+              url: "https://forge.laravel.com/vm-dev/valley-metro-preprod"
+            - label: "forge - website - prod"
+              url: "https://forge.laravel.com/vm-dev/valley-metro-prod"
+        - name: "slack"
+          links:
+            - label: "Partner channel"
+              url: "https://slack.com/app_redirect?channel=C02ANFTBCAG"
+            - label: "Internal channel"
+              url: "https://slack.com/app_redirect?channel=C02AG599743"
+
+  - type: "markdown"
+    label: "asana"
+    row: 3
+    col: 1
+    col_span: 4
+    settings:
+      file: "/Users/vanderlei/cowork/personal-assistant/asana-daily-summary.md"
+      url: "https://app.asana.com/1/19591846143938/project/1210689272498852/list/1210689285290627"
+      url_label: "Open in Asana"
+      max_height: "300px"

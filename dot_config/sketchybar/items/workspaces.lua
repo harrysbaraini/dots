@@ -30,7 +30,7 @@ for i, id in ipairs(ws_ids) do
 		},
 		icon = {
 			drawing = true,
-			string = settings.workspaces.circles[2],
+			string = settings.workspaces.circles[1],
 			color = colors.with_alpha(accent, 0.35),
 			font = { family = settings.font, style = "SemiBold", size = 12.0 },
 			padding_left = 8,
@@ -80,7 +80,7 @@ local function update_pills(focused_id)
 					},
 					icon = {
 						drawing = true,
-						string = settings.workspaces.circles[2],
+						string = settings.workspaces.circles[1],
 						color = colors.with_alpha(p.accent, 0.35),
 					},
 					background = {

@@ -1,3 +1,7 @@
+Host *
+    ServerAliveInterval 3600
+    ServerAliveCountMax 3
+
 # Work hosts - use 1Password SSH agent
 Host al-brand-cms
   HostName 52.5.246.208
@@ -17,4 +21,19 @@ Host vm-website-preprod
 Host vm-website-prod
   HostName 167.99.154.186
   User forge
+  IdentityFile ~/.ssh/id_ed25519
+
+Host vm-api-preprod
+  HostName 192.34.62.239
+  User forge
+  IdentityFile ~/.ssh/id_ed25519
+
+Host vm-api-prod
+  HostName 142.93.55.141
+  User forge
+  IdentityFile ~/.ssh/id_ed25519
+
+Host matrix.vans.dev
+  HostName 178.104.135.91
+  User root
   IdentityFile ~/.ssh/id_ed25519

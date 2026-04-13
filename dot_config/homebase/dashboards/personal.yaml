@@ -1,0 +1,119 @@
+name: "Personal"
+container_max_width: "1100px"
+font_family: "M PLUS Code Latin"
+
+# Grid configuration
+grid:
+  columns: 4
+  gap: "1rem"
+
+# Theme colors using Tailwind color names
+dark_theme:
+  bg: "zinc-950"
+  bg_panel: "zinc-900"
+  border: "zinc-800"
+  text: "zinc-100"
+  text_dimmed: "zinc-500"
+  text_accent: "blue-400"
+  success: "green-500"
+  success_dimmed: "green-900"
+  warning: "yellow-500"
+  warning_dimmed: "yellow-900"
+  danger: "red-500"
+  danger_dimmed: "red-900"
+  info: "blue-500"
+  info_dimmed: "blue-900"
+
+# Optional light theme (defaults to inverted dark if not specified)
+# light_theme:
+#   bg: "zinc-50"
+#   ...
+
+# Widget definitions
+widgets:
+  # Date/Time widget - top left, spans 2 columns
+  - type: "clock"
+    label: "Phoenix"
+    row: 1
+    col: 1
+    col_span: 1
+    settings:
+      timezone: "America/Phoenix"
+      format_24h: false
+      show_seconds: false
+      show_date: false
+  - type: "clock"
+    label: "New York"
+    row: 1
+    col: 2
+    col_span: 1
+    settings:
+      timezone: "America/New_York"
+      format_24h: false
+      show_seconds: false
+      show_date: false
+  - type: "clock"
+    label: "Joinville"
+    row: 1
+    col: 3
+    col_span: 2
+    settings:
+      timezone: "America/Sao_Paulo"
+      format_24h: false
+      show_seconds: false
+      show_date: true
+
+  # Bookmarks widget - bottom, full width
+  - type: "bookmarks"
+    label: "links"
+    row: 2
+    col: 1
+    col_span: 4
+    settings:
+      columns: 3
+      groups:
+        - name: "sirius"
+          links:
+            - label: "github"
+              url: "https://github.com/vansdevcode/sirius-system"
+            - label: "jira"
+              url: "https://vanderleisme.atlassian.net/jira/software/projects/SIR/boards/3"
+            - label: "sentry"
+              url: "https://vanderlei-amancio.sentry.io/insights/projects/sirius-rj/?project=4507246022885376"
+            - label: "rj"
+              url: "https://rj.vans.dev"
+        - name: "social"
+          links:
+            - label: "youtube"
+              url: "https://youtube.com"
+            - label: "reddit"
+              url: "https://reddit.com"
+            - label: "instagram"
+              url: "https://instagram.com"
+            - label: "linkedin"
+              url: "https://linkedin.com"
+        - name: "escola"
+          links:
+            - label: "Santo Antônio - Portal"
+              url: "https://portalrm.santoantonio.edu.br/framehtml//web/app/edu/PortalEducacional/#/"
+            - label: "Santo Antônio - Positivo On"
+              url: "https://positivoon.com.br/painel/"
+            - label: "Bonja - Portal"
+              url: "https://portal.colegiobonja.com.br/portal-educacional/"
+        - name: "others"
+          links:
+            - label: "translate br->it"
+              url: "https://translate.kagi.com/?from=pt_br&to=it&text="
+            - label: "translate br->en"
+              url: "https://translate.kagi.com/?from=pt_br&to=en_gb&text="
+
+  - type: "markdown"
+    label: "brain-dump"
+    row: 3
+    col: 1
+    col_span: 4
+    settings:
+      file: "/Users/vanderlei/cowork/personal-assistant/brain-dump.md"
+      url: "vscode://file//Users/vanderlei/cowork/personal-assistant/brain-dump.md"
+      url_label: "Open in vscode"
+      max_height: "300px"

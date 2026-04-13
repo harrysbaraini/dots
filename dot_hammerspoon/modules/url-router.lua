@@ -40,6 +40,7 @@ local routes = {
 	{ pattern = "kirschbaumdevelopment%.com", profile = "kdg" },
 	{ pattern = "clockify%.me", profile = "kdg" },
 	{ pattern = "slack%.com", profile = "kdg" },
+	{ pattern = "kirschbaum%.slite%.com", profile = "kdg" },
 }
 
 -- Match a pattern ensuring it ends at a segment boundary (/, ?, #, or end-of-string).
