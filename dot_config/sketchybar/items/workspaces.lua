@@ -1,111 +1,83 @@
 -- items/workspaces.lua
--- AeroSpace workspace indicator pills (left side)
--- 6 fixed slots; focused one gets an accent-coloured pill background.
--- Clicking a pill switches to that AeroSpace workspace.
+-- PaperWM (Hammerspoon) workspace indicator pills (left side)
+-- 5 fixed slots; focused one gets an accent-coloured pill background.
+-- Clicking a pill switches to that PaperWM space via a hammerspoon:// URL.
 
 local colors = require("colors")
 local settings = require("settings")
 
+local STATE_FILE = "/tmp/paperwm-sketchybar.json"
+
 local ws_ids = settings.workspaces.ids
 local ws_labels = settings.workspaces.labels
+local ws_icons = settings.workspaces.icons
+
+local ws_pill = sbar.add("item", "space_pill", {
+	position = "left",
+	padding_left = 2,
+	padding_right = 4,
+	label = {
+		drawing = true,
+		string = "Workspace",
+		font = { family = settings.font, style = settings.font_style_bold, size = 12.0 },
+		color = colors.fg_primary,
+		padding_left = 8,
+		padding_right = 8,
+	},
+	icon = {
+		drawing = true,
+		string = " ",
+		color = colors.fg_primary,
+		font = { family = settings.font_nerd, style = settings.font_style_bold, size = 12.0 },
+		padding_left = 8,
+		padding_right = 0,
+	},
+	background = {
+		drawing = true,
+		color = colors.with_alpha(colors.bg_base, 0.85),
+		border_color = colors.with_alpha(colors.bg_surface, 0.85),
+		border_width = 1,
+		height = settings.item.height,
+	},
+})
 
 -- ── Build pill items ──────────────────────────────────────────────────────────
 local pills = {}
 
 for i, id in ipairs(ws_ids) do
 	local label = ws_labels[i] or id
+	local icon = ws_icons[i] or id
 	local accent = colors.workspace_accents[i] or colors.wave_blue
 
-	local pill = sbar.add("item", "space." .. id, {
-		position = "left",
-		padding_left = 2,
-		padding_right = 2,
-		label = {
-			drawing = false,
-			string = label,
-			font = { family = settings.font, style = "SemiBold", size = 12.0 },
-			color = colors.with_alpha(accent, 0.85),
-			padding_left = 0,
-			padding_right = 8,
-		},
-		icon = {
-			drawing = true,
-			string = settings.workspaces.circles[1],
-			color = colors.with_alpha(accent, 0.35),
-			font = { family = settings.font, style = "SemiBold", size = 12.0 },
-			padding_left = 8,
-			padding_right = 8,
-		},
-		background = {
-			drawing = false,
-			color = colors.with_alpha(accent, 0.26),
-			border_color = colors.with_alpha(accent, 0.48),
-			border_width = 0,
-			corner_radius = settings.item.corner_radius,
-			height = settings.item.height,
-		},
-		click_script = "aerospace workspace " .. id,
-	})
-
-	pills[id] = { item = pill, accent = accent, label = label }
+	pills[id] = { accent = accent, label = label, icon = icon }
 end
 
 -- ── Highlight logic ───────────────────────────────────────────────────────────
 local function update_pills(focused_id)
-	-- focused_id is a string like "1"
-	for id, p in pairs(pills) do
-		if id == focused_id then
-			sbar.animate("tanh", 10, function()
-				p.item:set({
-					label = {
-						drawing = true,
-					},
-					icon = {
-						drawing = true,
-						string = settings.workspaces.circles[1],
-						color = colors.with_alpha(p.accent, 0.85),
-					},
-					background = {
-						drawing = true,
-						color = colors.with_alpha(p.accent, 0.26),
-						border_color = colors.with_alpha(p.accent, 0.48),
-					},
-				})
-			end)
-		else
-			sbar.animate("tanh", 10, function()
-				p.item:set({
-					label = {
-						drawing = false,
-					},
-					icon = {
-						drawing = true,
-						string = settings.workspaces.circles[1],
-						color = colors.with_alpha(p.accent, 0.35),
-					},
-					background = {
-						drawing = false,
-					},
-				})
-			end)
-		end
-	end
+	ws_pill:set({
+		label = {
+			string = pills[focused_id].label or "Workspace",
+		},
+		icon = {
+			string = pills[focused_id].icon,
+		},
+	})
 end
 
 -- ── Separator ─────────────────────────────────────────────────────────────────
-sbar.add("item", "ws_sep", {
-	position = "left",
-	padding_left = 0,
-	padding_right = 8,
-	icon = {
-		string = "│",
-		color = colors.with_alpha(colors.fg_dim, 0.30),
-		padding_left = 2,
-		padding_right = 2,
-	},
-	label = { drawing = false },
-	background = { drawing = false },
-})
+-- sbar.add("item", "ws_sep", {
+--	position = "left",
+--	padding_left = 0,
+--	padding_right = 8,
+--	icon = {
+--		string = "│",
+--		color = colors.with_alpha(colors.fg_dim, 0.30),
+--		padding_left = 2,
+--		padding_right = 2,
+--	},
+---	label = { drawing = false },
+--	background = { drawing = false },
+-- })
 
 -- ── Event subscription via a single visible sentinel ──────────────────────────
 -- IMPORTANT: must NOT be drawing=false with updates=when_shown, or events die.
@@ -115,17 +87,16 @@ local ws_sentinel = sbar.add("item", "ws.sentinel", {
 	updates = true, -- must be true so the hidden item still receives events
 })
 
-ws_sentinel:subscribe("aerospace_workspace_change", function(env)
+ws_sentinel:subscribe("paperwm_workspace_change", function(env)
 	local focused_id = env.FOCUSED_WORKSPACE or ""
 	update_pills(focused_id)
 end)
 
 -- ── Initial state ─────────────────────────────────────────────────────────────
-sbar.exec("aerospace list-workspaces --focused", function(result)
-	local focused_id = (result or ""):gsub("%s+", "")
-	if focused_id ~= "" then
-		update_pills(focused_id)
+sbar.exec("cat " .. STATE_FILE .. " 2>/dev/null", function(result)
+	if type(result) == "table" and result.focused_space then
+		update_pills(tostring(result.focused_space))
 	end
 end)
 
-return { pills = pills, update = update_pills }
+return { pill = ws_pill, update = update_pills }

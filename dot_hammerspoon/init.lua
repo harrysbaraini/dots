@@ -3,9 +3,9 @@ package.path = package.path
 
 local utils = require("utils")
 
-require("window-switch")
+require("paper-wm")
+require("sketchybar-bridge")
 require("dark-mode-watcher")
-require("workspace-rules")
 require("url-router")
 
 -- Auto reload config
@@ -20,5 +20,5 @@ function reloadConfig(files)
 		hs.reload()
 	end
 end
-myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.config/hammerspoon/", reloadConfig):start()
+myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 hs.alert.show("Hammerspoon Config Loaded!", 0.5)

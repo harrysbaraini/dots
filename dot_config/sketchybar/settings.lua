@@ -1,12 +1,19 @@
 -- SketchyBar settings / design tokens
 
 local settings = {
-	font = "JetBrainsMono Nerd Font",
+	font = "Inter",
+	font_style_regular = "Regular",
+	font_style_bold = "Medium",
+	font_style_italic = "Italic",
+	font_style_italic_bold = "SemiBold Italic",
+
+	font_nerd = "JetBrainsMono Nerd Font",
+
 	app_font = "sketchybar-app-font",
 
 	bar = {
 		height = 36,
-		corner_radius = 10,
+		corner_radius = 12,
 		border_width = 1,
 		blur_radius = 8,
 		y_offset = 2,
@@ -24,9 +31,9 @@ local settings = {
 
 	-- Workspace pill display
 	workspaces = {
-		ids = { "1", "2", "3", "4", "5", "6" },
-		labels = { "VSA", "VLM", "JUI", "KDG", "WS5", "WS6" },
-		icons = { "", "", "", "", "", "󰂓", "󰎶", "󰎹", "󰎼", "󰎡" },
+		ids = { "1", "2", "3", "4", "5" },
+		labels = { "vans.dev", "Valley Metro", "Juiced", "Kirschbaum", "Workspace 5" },
+		icons = { "", "", "", "", "󰂓", "󰎳", "󰎶", "󰎹", "󰎼", "󰎡" },
 		circles = { "●", "○", "◉", "◎", "◌" },
 	},
 

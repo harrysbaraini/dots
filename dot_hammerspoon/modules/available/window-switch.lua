@@ -1,6 +1,5 @@
 local utils = require("utils")
 
-
 local M = {}
 
 local function chooseWindow()
