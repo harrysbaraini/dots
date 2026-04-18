@@ -50,9 +50,9 @@ local function render(state)
 	end
 
 	-- Stable left-to-right order by window id
-	table.sort(windows, function(a, b)
-		return (tonumber(a.id) or 0) < (tonumber(b.id) or 0)
-	end)
+	-- table.sort(windows, function(a, b)
+	--	return (tonumber(a.id) or 0) < (tonumber(b.id) or 0)
+	-- end)
 
 	local accent = colors.workspace_accents[ws_idx] or colors.wave_blue
 	local accent_bg = colors.with_alpha(colors.bg_base, 0.85)
