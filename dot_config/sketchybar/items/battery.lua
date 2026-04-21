@@ -23,8 +23,8 @@ local battery = sbar.add("item", {
 		padding_right = 8,
 	},
 	background = {
-		color = colors.with_alpha(colors.bg_base, 0.85),
-		border_color = colors.with_alpha(colors.bg_surface, 0.85),
+		color = settings.bracket.bg,
+		border_color = settings.bracket.border,
 		border_width = 1,
 	},
 })

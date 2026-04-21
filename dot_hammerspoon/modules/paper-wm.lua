@@ -21,32 +21,14 @@ WarpMouse.reverseScreens = false
 WarpMouse:start()
 
 -- switch to a new focused window in tiled grid
-hs.hotkey.bind(utils.HYPER, "h", function()
-	actions.focus_left()
-	actions.center_window()
-end)
-hs.hotkey.bind(utils.HYPER, "l", function()
-	actions.focus_right()
-	actions.center_window()
-end)
-hs.hotkey.bind(utils.HYPER, "k", function()
-	actions.focus_up()
-	actions.center_window()
-end)
-hs.hotkey.bind(utils.HYPER, "j", function()
-	actions.focus_down()
-	actions.center_window()
-end)
+hs.hotkey.bind(utils.HYPER, "h", actions.focus_left)
+hs.hotkey.bind(utils.HYPER, "l", actions.focus_right)
+hs.hotkey.bind(utils.HYPER, "k", actions.focus_up)
+hs.hotkey.bind(utils.HYPER, "j", actions.focus_down)
 
 -- focus the leftmost / rightmost window in the current space
-hs.hotkey.bind(utils.HYPER, "home", function()
-	actions.focus_window_first()
-	actions.center_window()
-end)
-hs.hotkey.bind(utils.HYPER, "end", function()
-	actions.focus_window_last()
-	actions.center_window()
-end)
+hs.hotkey.bind(utils.HYPER, "home", actions.focus_window_first)
+hs.hotkey.bind(utils.HYPER, "end", actions.focus_window_last)
 
 -- position and resize focused window
 hs.hotkey.bind(utils.HYPER, "c", actions.center_window)
@@ -82,45 +64,81 @@ hs.hotkey.bind(utils.HYPER, "7", actions.focus_window_7)
 hs.hotkey.bind(utils.HYPER, "8", actions.focus_window_8)
 hs.hotkey.bind(utils.HYPER, "9", actions.focus_window_9)
 
+-- set to a table of modifier keys to enable window dragging, default is nil
+PaperWM.drag_window = { "alt", "cmd" }
+
+-- set to a table of modifier keys to enable window lifting, default is nil
+PaperWM.lift_window = { "alt", "cmd", "ctrl" }
+
+-- Remember the last focused window per Mission Control space, so switching
+-- back to a space restores focus instead of jumping to the first window.
+local lastFocusedIdBySpace = {}
+
+local function rememberFocus(win)
+	if not win then
+		return
+	end
+	local id = win:id()
+	if not id then
+		return
+	end
+	local spaces = hs.spaces.windowSpaces(win)
+	if spaces and spaces[1] then
+		lastFocusedIdBySpace[spaces[1]] = id
+	end
+end
+
+local focusWatcher = hs.window.filter.new()
+focusWatcher:subscribe(hs.window.filter.windowFocused, function(win)
+	rememberFocus(win)
+end)
+
+local function switchToSpace(index)
+	-- Capture current focus before leaving the space, in case the last
+	-- windowFocused event hasn't been delivered yet.
+	rememberFocus(hs.window.focusedWindow())
+
+	local space_id = PaperWM.space.MissionControl:getSpaceID(index)
+	if not space_id then
+		actions["switch_space_" .. index]()
+		return
+	end
+
+	local remembered_id = lastFocusedIdBySpace[space_id]
+	local remembered_win = remembered_id and hs.window.get(remembered_id) or nil
+
+	if remembered_win then
+		local wspaces = hs.spaces.windowSpaces(remembered_win)
+		local on_space = false
+		if wspaces then
+			for _, s in ipairs(wspaces) do
+				if s == space_id then
+					on_space = true
+					break
+				end
+			end
+		end
+		if not on_space then
+			remembered_win = nil
+		end
+	end
+
+	if remembered_win then
+		PaperWM.space.MissionControl:focusSpace(space_id, remembered_win)
+	else
+		actions["switch_space_" .. index]()
+	end
+end
+
 -- switch to a new Mission Control space
 local switchToSpaceModal = hs.hotkey.modal.new(utils.HYPER, "space")
 
-switchToSpaceModal:bind({}, "1", nil, function()
-	actions.switch_space_1()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "2", nil, function()
-	actions.switch_space_2()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "3", nil, function()
-	actions.switch_space_3()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "4", nil, function()
-	actions.switch_space_4()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "5", nil, function()
-	actions.switch_space_5()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "6", nil, function()
-	actions.switch_space_6()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "7", nil, function()
-	actions.switch_space_7()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "8", nil, function()
-	actions.switch_space_8()
-	switchToSpaceModal:exit()
-end)
-switchToSpaceModal:bind({}, "9", nil, function()
-	actions.switch_space_9()
-	switchToSpaceModal:exit()
-end)
+for i = 1, 9 do
+	switchToSpaceModal:bind({}, tostring(i), nil, function()
+		switchToSpace(i)
+		switchToSpaceModal:exit()
+	end)
+end
 
 switchToSpaceModal:bind({}, "escape", function()
 	switchToSpaceModal:exit()

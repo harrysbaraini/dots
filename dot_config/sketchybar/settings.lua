@@ -1,3 +1,5 @@
+local colors = require("colors")
+
 -- SketchyBar settings / design tokens
 
 local settings = {
@@ -24,6 +26,13 @@ local settings = {
 		corner_radius = 8,
 		height = 26,
 		border_width = 1,
+	},
+
+	bracket = {
+		bg = colors.with_alpha(colors.bg_base, 0.55),
+		border = colors.with_alpha(colors.fg_primary, 0.10),
+		text = colors.fg_primary,
+		text_muted = colors.fg_secondary,
 	},
 
 	paddings = 6, -- default icon/label side padding

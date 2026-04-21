@@ -14,7 +14,6 @@ local STATE_FILE = "/tmp/paperwm-sketchybar.json"
 
 local current_items = {} -- { [window_id] = item_ref }
 local focused_win_id = nil
-local current_ws = nil
 
 local function truncate(str, max_len)
 	if not str or str == "" then
@@ -41,7 +40,6 @@ local function render(state)
 	end
 
 	local ws_idx = tonumber(state.focused_space) or 0
-	current_ws = ws_idx
 	focused_win_id = tostring(state.focused_window or "")
 
 	local windows = state.windows or {}
@@ -55,10 +53,10 @@ local function render(state)
 	-- end)
 
 	local accent = colors.workspace_accents[ws_idx] or colors.wave_blue
-	local accent_bg = colors.with_alpha(colors.bg_base, 0.85)
-	local accent_border = colors.with_alpha(colors.bg_surface, 0.85)
-	local accent_fg = colors.with_alpha(colors.fg_primary, 1)
-	local accent_fg_muted = colors.with_alpha(colors.old_white, 0.80)
+	local accent_bg = settings.bracket.bg
+	local accent_border = settings.bracket.border
+	local accent_fg = settings.bracket.text
+	local accent_fg_muted = settings.bracket.text_muted
 
 	local member_names = {}
 
@@ -112,7 +110,7 @@ local function render(state)
 			background = {
 				color = accent_bg,
 				border_color = accent_border,
-				border_width = 0,
+				border_width = 1,
 				corner_radius = settings.item.corner_radius,
 				height = settings.item.height,
 			},
