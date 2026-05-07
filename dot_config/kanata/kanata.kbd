@@ -8,11 +8,12 @@
   macos-dev-names-include (
     "vansdev Air75 V3"
     "Air75 V3"
-  )
-
-  macos-dev-names-exclude (
     "Apple Internal Keyboard / Trackpad"
   )
+
+;;   macos-dev-names-exclude (
+;;     "Apple Internal Keyboard / Trackpad"
+;;   )
 
   process-unmapped-keys yes
   log-layer-changes no
