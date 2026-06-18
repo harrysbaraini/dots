@@ -12,3 +12,7 @@
 
 # Ignore oh-my-zsh caches
 .oh-my-zsh/cache
+
+# Ignore local-dev state files
+.local/share/local-dev/step-ca
+.local/share/local-dev/acme

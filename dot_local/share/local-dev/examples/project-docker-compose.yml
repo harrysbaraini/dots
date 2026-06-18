@@ -1,0 +1,82 @@
+# Example project configuration for use with the global Caddy infrastructure
+# Place this in your project's docker-compose.yml
+
+services:
+  app:
+    image: your-app-image:latest
+    # or build: .
+
+    labels:
+      caddy: "myproject.test"
+      caddy.reverse_proxy: "{{upstreams 80}}"
+
+    environment:
+      - APP_URL=https://myproject.test
+      - DB_HOST=postgres
+      - DB_DATABASE=myproject
+      - REDIS_HOST=redis
+
+    volumes:
+      - ./:/var/www/html
+      # Mounts the local root CA so this container trusts *.test HTTPS endpoints.
+      # The volume contains a single file: local-dev.crt.
+      # After mounting, run `update-ca-certificates` once (see entrypoint note below).
+      - step_ca_root_crt:/usr/local/share/ca-certificates/
+
+    networks:
+      - global
+
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: myproject
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - global
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    networks:
+      - global
+
+volumes:
+  postgres_data:
+  redis_data:
+  step_ca_root_crt:
+    external: true
+
+networks:
+  global:
+    external: true
+
+# ---------------------------------------------------------------------------
+# Activating the cert inside the container
+# ---------------------------------------------------------------------------
+#
+# The volume mount puts local-dev.crt in the right place, but you still need
+# to run `update-ca-certificates` once at container start so the OS trust
+# bundle picks it up. Add it to your entrypoint or command:
+#
+# Option A — docker-compose command override (no Dockerfile changes):
+#   command: >
+#     sh -c "update-ca-certificates && exec php-fpm"
+#
+# Option B — entrypoint script (recommended for reuse across environments):
+#   #!/bin/sh
+#   update-ca-certificates 2>/dev/null || true
+#   exec "$@"
+#
+# Option C — curl only, skip update-ca-certificates entirely:
+#   curl --cacert /usr/local/share/ca-certificates/local-dev.crt https://otherapp.test/
+#
+# Option D — Node.js, without touching the system bundle:
+#   NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/local-dev.crt node server.js

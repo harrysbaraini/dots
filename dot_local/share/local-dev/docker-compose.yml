@@ -1,0 +1,109 @@
+name: local-dev
+services:
+  dns:
+    image: coredns/coredns
+    container_name: local-dns
+    command: -conf /Corefile -dns.port 53
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    volumes:
+      - ./Corefile:/Corefile:ro
+    restart: unless-stopped
+    networks:
+      global:
+        ipv4_address: 192.168.80.2
+
+  step-ca:
+    image: smallstep/step-ca
+    container_name: step-ca
+    hostname: step-ca
+    ports:
+      - "9000:9000"
+    volumes:
+      - step_ca_data:/home/step # full CA state (config, secrets, db)
+      - ./step-ca/certs:/home/step/certs # public certs only — safe to share
+      - ./resolv.conf:/etc/resolv.conf:ro
+    environment:
+      DOCKER_STEPCA_INIT_PASSWORD: "password123"
+      DOCKER_STEPCA_INIT_NAME: "LocalDevCA"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "localhost,step-ca"
+    networks:
+      global:
+        ipv4_address: 192.168.80.3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "test", "-f", "/home/step/certs/root_ca.crt"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 5s
+
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      CADDY_INGRESS_NETWORKS: global
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - step_ca_certs:/certs:ro # root_ca.crt is at /certs/root_ca.crt
+      - caddy_data:/data
+    labels:
+      # Global Caddy options (no caddy value = global options block)
+      caddy.acme_ca: "https://step-ca:9000/acme/local-dev-acme/directory"
+      caddy.acme_ca_root: "/certs/root_ca.crt"
+      caddy.email: "hey@vans.dev"
+    networks:
+      global:
+        ipv4_address: 192.168.80.4
+    depends_on:
+      step-ca:
+        condition: service_healthy
+    restart: unless-stopped
+
+  bastion:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: bastion
+    hostname: bastion
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - USER_NAME=dev
+      - PASSWORD_ACCESS=false
+      - SUDO_ACCESS=false
+      - DOCKER_MODS=linuxserver/mods:openssh-server-ssh-tunnel
+      - SHELL_NOLOGIN=false
+    volumes:
+      - ~/.ssh/id_ed25519.pub:/config/.ssh/authorized_keys
+    ports:
+      - "2222:2222"
+    networks:
+      global:
+        ipv4_address: 192.168.80.5
+    restart: unless-stopped
+
+  buggregator:
+    image: ghcr.io/buggregator/server:latest
+    container_name: buggregator
+    environment:
+      - "HTTP_ADDR=0.0.0.0:8000"
+    labels:
+      caddy: "debug.test"
+      caddy.reverse_proxy: "{{upstreams 8000}}"
+    restart: unless-stopped
+    networks:
+      global:
+        ipv4_address: 192.168.80.6
+
+networks:
+  global:
+    external: true
+
+volumes:
+  step_ca_data:
+  step_ca_certs:
+  caddy_data:

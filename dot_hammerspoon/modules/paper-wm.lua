@@ -10,8 +10,8 @@ PaperWM = hs.loadSpoon("PaperWM")
 local actions = PaperWM.actions.actions()
 
 PaperWM.default_width = 0.98
-PaperWM.external_bar = { top = 36 }
-PaperWM.window_gap = 6
+PaperWM.external_bar = { top = 28 }
+PaperWM.window_gap = 4
 PaperWM.window_ratios = { 0.25, 0.50, 0.75, 0.98 }
 
 -- Warp the mouse cursor from the edge of one screen to the edge of another screen to simulate external monitors being placed side by side.

@@ -1,0 +1,36 @@
+valleymetro.test:53 {
+    template IN A {
+        answer "{{ .Name }} 0 IN A 127.0.0.1"
+    }
+}
+
+api.valleymetro.test:53 {
+    template IN A {
+        answer "{{ .Name }} 0 IN A 127.0.0.1"
+    }
+}
+
+test:53 {
+    view docker {
+        expr incidr(client_ip(), '192.168.80.0/24')
+    }
+    template IN A {
+        answer "{{ .Name }} 0 IN A 192.168.80.4"
+    }
+    log
+    errors
+}
+
+test:53 {
+    template IN A {
+        answer "{{ .Name }} 0 IN A 127.0.0.1"
+    }
+    log
+    errors
+}
+
+.:53 {
+    forward . 8.8.8.8 9.9.9.9
+    log
+    errors
+}

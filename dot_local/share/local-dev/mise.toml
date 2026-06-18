@@ -1,0 +1,158 @@
+[tools]
+mkcert = "latest"
+
+[tasks.start]
+description = "Start the infrastructure"
+run = '''
+#!/usr/bin/env bash
+docker network inspect global &>/dev/null || docker network create global --gateway 192.168.80.1 --subnet 192.168.80.0/24 &>/dev/null
+
+docker compose up -d
+echo ""
+echo "✅ Infrastructure started!"
+echo "🔍 Test DNS: dig anything.test @127.0.0.1"
+'''
+
+[tasks.stop]
+description = "Stop the infrastructure"
+run = """
+docker compose down
+echo "✅ Infrastructure stopped"
+"""
+
+[tasks.restart]
+description = "Restart the infrastructure"
+run = """
+docker compose restart
+echo "✅ Infrastructure restarted"
+"""
+
+[tasks.logs]
+description = "Show logs (follow mode)"
+run = "docker compose logs -f"
+
+[tasks.status]
+description = "Show status of all containers"
+run = """
+echo "Infrastructure containers:"
+docker compose ps
+echo ""
+echo "Projects using Caddy:"
+docker ps --filter 'label=caddy' --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+"""
+
+[tasks."add-acme-ca"]
+description = "Register the local-dev-acme provisioner on step-ca (~9.9-year cert duration, ceiling = intermediate CA expiry)"
+run = """
+docker exec -it step-ca step ca provisioner add local-dev-acme --type ACME \
+  --x509-default-dur=87000h --x509-max-dur=87000h
+
+docker compose restart step-ca
+
+CA_FINGERPRINT=$(docker compose exec step-ca step certificate fingerprint /home/step/certs/root_ca.crt)
+step ca bootstrap -f --ca-url https://localhost:9000 --fingerprint $CA_FINGERPRINT
+
+echo "✅ ACME provisioner registered (~9.9y cert duration)"
+"""
+
+[tasks."renew-certs"]
+description = "Force Caddy to re-issue every cert (use after changing cert duration or when certs have expired)"
+run = """
+docker compose exec caddy rm -rf /data/caddy/certificates 2>/dev/null || \
+  docker compose run --rm --entrypoint sh caddy -c "rm -rf /data/caddy/certificates"
+docker compose restart caddy
+echo "✅ Caddy cert store cleared — certs will be re-issued on first request to each hostname"
+"""
+
+[tasks."install-resolver-macos"]
+description = "Configure macOS DNS resolver (requires sudo)"
+run = """
+echo "🔧 Configuring macOS DNS resolver..."
+sudo mkdir -p /etc/resolver
+echo "nameserver 127.0.0.1" | sudo tee /etc/resolver/test
+echo "✅ DNS resolver configured for .test domains"
+echo "💡 Flush DNS cache: sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
+"""
+
+[tasks."install-resolver-linux"]
+description = "Configure Linux DNS resolver (systemd-resolved)"
+run = """
+echo "🔧 Configuring Linux DNS resolver..."
+sudo mkdir -p /etc/systemd/resolved.conf.d
+echo "[Resolve]" | sudo tee /etc/systemd/resolved.conf.d/test-domain.conf
+echo "DNS=127.0.0.1" | sudo tee -a /etc/systemd/resolved.conf.d/test-domain.conf
+echo "Domains=~test" | sudo tee -a /etc/systemd/resolved.conf.d/test-domain.conf
+sudo systemctl restart systemd-resolved
+echo "✅ DNS resolver configured for .test domains"
+"""
+
+[tasks."test-dns"]
+description = "Test DNS resolution"
+run = """
+echo "Testing DNS resolution..."
+dig myproject.test @127.0.0.1 +short || echo "❌ DNS not working"
+nslookup anything.test 127.0.0.1 || echo "❌ DNS not working"
+echo "✅ If you see 127.0.0.1 above, DNS is working!"
+"""
+
+[tasks."test-https"]
+description = "Test HTTPS certificate"
+run = """
+echo "Testing HTTPS certificate..."
+if curl -I https://test.test 2>&1 | grep -q "SSL certificate problem"; then
+  echo "❌ Certificate not trusted"
+else
+  echo "✅ Certificate is trusted"
+fi
+"""
+
+[tasks.clean]
+description = "Remove all containers and volumes (keeps nothing — re-run setup afterwards)"
+run = """
+docker compose down -v
+docker network rm global 2>/dev/null || true
+echo "🗑️  Containers, volumes, and network removed"
+echo "   Re-run: mise run setup (macOS) or mise run setup-linux"
+"""
+
+[tasks.setup]
+description = "Complete first-time setup for macOS (start stack, register ACME provisioner, trust root CA, configure resolver)"
+depends = ["start", "add-acme-ca", "trust-cert", "install-resolver-macos"]
+run = """
+echo ""
+echo "✅ Setup complete!"
+echo "💡 Fully quit your browser (⌘Q) and reopen so it picks up the trusted root CA."
+"""
+
+[tasks."setup-linux"]
+description = "Complete first-time setup for Linux (start stack, register ACME provisioner, configure resolver)"
+depends = ["start", "add-acme-ca", "install-resolver-linux"]
+run = """
+echo ""
+echo "✅ Setup complete!"
+echo "⚠️  Trust the root CA in your distro's trust store manually:"
+echo "   docker compose exec step-ca cat /home/step/certs/root_ca.crt | sudo tee /usr/local/share/ca-certificates/local-dev-ca.crt"
+echo "   sudo update-ca-certificates"
+echo "   (Firefox: ./scripts/install-step-ca.sh)"
+"""
+
+[tasks."trust-cert"]
+description = "Trust the step-ca root certificate in the macOS keychain"
+run = """
+#!/usr/bin/env bash
+set -e
+
+if ! docker compose exec step-ca true 2>/dev/null; then
+  echo "❌ step-ca is not running. Start it first: mise run start"
+  exit 1
+fi
+
+CERT_PATH=$(mktemp)
+docker compose exec step-ca cat /home/step/certs/root_ca.crt > "$CERT_PATH"
+
+echo "Installing into macOS Keychain..."
+sudo security delete-certificate -c "LocalDevCA" /Library/Keychains/System.keychain 2>/dev/null || true
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$CERT_PATH"
+rm "$CERT_PATH"
+echo "✅ Certificate trusted!"
+"""
