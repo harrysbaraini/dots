@@ -1,6 +1,6 @@
 [settings]
 experimental = true
-idiomatic_version_file_enable_tools = []
+idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
 # gum and envsubst for our tasks
@@ -19,7 +19,7 @@ lazygit = "latest"
 yazi = "latest"
 aws = "latest"
 pnpm = "latest"
-node = "latest"
+node = "24"
 npm = "latest"
 # A smarter `cd`
 zoxide = "latest"
@@ -34,6 +34,9 @@ devcontainer-cli = "latest"
 uv = "latest"
 gomplate = "latest"
 yq = "latest"
+pitchfork = "latest"
+"npm:agent-browser" = "latest"
+ast-grep = "latest"
 
 # [tools."http:php"]
 # version = "8.4.12"

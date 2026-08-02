@@ -3,8 +3,8 @@ package.path = package.path
 
 local utils = require("utils")
 
-require("paper-wm")
-require("sketchybar-bridge")
+-- require("paper-wm")
+-- require("sketchybar-bridge")
 require("dark-mode-watcher")
 require("url-router")
 

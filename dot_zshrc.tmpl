@@ -52,8 +52,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 {{- if lookPath "mise" }}
 export MISE_IGNORED_CONFIG_PATHS="$HOME/.local/share/chezmoi"
-{{ output "mise" "activate" "zsh" }}
-alias mr="mise run"
+eval "$(mise activate zsh)"
 {{- end }}
 
 #--------------------
@@ -96,3 +95,16 @@ path+=("$BUN_INSTALL/bin")
 {{- if lookPath "kanata" }}
 alias kreload="sudo kill -USR1 $(pgrep kanata)"
 {{- end }}
+
+#------------------
+# Pi Agent
+#------------------
+
+pil() {
+  if [ -d .pi/skills ]; then
+    pi --no-skills --skill .pi/skills --skill ~/.agents/skills/frontend-design "$@"
+  else
+    pi --no-skills --skill ~/.agents/skills/frontend-design "$@"
+  fi
+}
+

@@ -33,7 +33,7 @@ Host vm-api-prod
   User forge
   IdentityFile ~/.ssh/id_ed25519
 
-Host matrix.vans.dev
-  HostName 178.104.135.91
-  User root
+Host vm-trips-preprod
+  HostName  137.184.31.89
+  User forge
   IdentityFile ~/.ssh/id_ed25519

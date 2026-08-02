@@ -13,6 +13,17 @@
 # Ignore oh-my-zsh caches
 .oh-my-zsh/cache
 
+# Ignore ssh files
+.ssh/*
+!.ssh/config
+
 # Ignore local-dev state files
 .local/share/local-dev/step-ca
 .local/share/local-dev/acme
+
+# Ignore .git/.jj directories
+.git
+.jj
+
+# Other files
+DS_Store
