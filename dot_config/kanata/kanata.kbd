@@ -32,12 +32,12 @@
 )
 
 (defalias
-  hyperkey (tap-hold-press $tap-time $hold-time esc (multi lsft lctl lalt lmet))
+  mehkey (tap-hold-press $tap-time $hold-time esc (multi rctl ralt rmet))
 )
 
 ;; Main layer
 ;; mappings that are not attached to specific workspaces / apps
 
 (deflayer main
-  @hyperkey
+  @mehkey
 )

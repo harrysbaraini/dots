@@ -1,10 +1,6 @@
 package.path = package.path
 	.. ";/Users/vanderlei/.hammerspoon/modules/?.lua;/Users/vanderlei/.hammerspoon/modules/?/init.lua"
 
-local utils = require("utils")
-
--- require("paper-wm")
--- require("sketchybar-bridge")
 require("dark-mode-watcher")
 require("url-router")
 
