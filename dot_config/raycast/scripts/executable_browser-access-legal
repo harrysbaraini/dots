@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Access Legal - Browser
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 🌐
+omniwmctl command switch-workspace 3
+hs -c 'Dia.openProfile("Access legal", "3")'

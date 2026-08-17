@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Access Legal - Terminal
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 💻
+TARGET_DIR="$HOME/Projects/access-legal"
+SESSION_NAME="access-legal"
+
+omniwmctl command switch-workspace 3
+sleep 0.2
+$HOME/.config/scripts/new_wezterm_window.sh $TARGET_DIR $SESSION_NAME

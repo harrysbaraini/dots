@@ -1,8 +1,11 @@
 package.path = package.path
 	.. ";/Users/vanderlei/.hammerspoon/modules/?.lua;/Users/vanderlei/.hammerspoon/modules/?/init.lua"
 
+require("hs.ipc")
 require("dark-mode-watcher")
 require("url-router")
+
+Dia = require("dia-opener")
 
 -- Auto reload config
 function reloadConfig(files)
@@ -16,5 +19,6 @@ function reloadConfig(files)
 		hs.reload()
 	end
 end
+
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 hs.alert.show("Hammerspoon Config Loaded!", 0.5)

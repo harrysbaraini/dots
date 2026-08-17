@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Juiced - Terminal
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 💻
+TARGET_DIR="$HOME/work/juiced"
+SESSION_NAME="juiced"
+
+omniwmctl command switch-workspace 4
+sleep 0.2
+$HOME/.config/scripts/new_wezterm_window.sh $TARGET_DIR $SESSION_NAME

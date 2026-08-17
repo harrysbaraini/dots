@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Valley Metro - Terminal
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 💻
+TARGET_DIR="$HOME/Projects/valleymetro"
+SESSION_NAME="valleymetro"
+
+omniwmctl command switch-workspace 2
+sleep 0.2
+$HOME/.config/scripts/new_wezterm_window.sh $TARGET_DIR $SESSION_NAME

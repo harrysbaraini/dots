@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Valley Metro - Browser
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 🌐
+omniwmctl command switch-workspace 2
+hs -c 'Dia.openProfile("Valley Metro", "2")'

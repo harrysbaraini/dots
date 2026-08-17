@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Juiced - Browser
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 🌐
+omniwmctl command switch-workspace 4
+hs -c 'Dia.openProfile("Juiced", "3")'
+

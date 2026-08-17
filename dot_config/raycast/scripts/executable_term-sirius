@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Sirius - Terminal
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 💻
+TARGET_DIR="$HOME/Projects/sirius-system"
+SESSION_NAME="sirius-system"
+
+omniwmctl command switch-workspace 1
+sleep 0.2
+$HOME/.config/scripts/new_wezterm_window.sh $TARGET_DIR $SESSION_NAME

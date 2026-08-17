@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Personal - Browser
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 🌐
+omniwmctl command switch-workspace 1
+hs -c 'Dia.openProfile("Personal", "1")'

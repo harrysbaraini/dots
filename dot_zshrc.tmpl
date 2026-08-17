@@ -38,6 +38,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 [[ -d "$HOME/.opencode/bin" ]] && path+=("$HOME/.opencode/bin")
 [[ -d "$HOME/.config/scripts" ]] && path+=("$HOME/.config/scripts")
 [[ -d "$HOME/.antigravity/antigravity/bin" ]] && path+=("$HOME/.antigravity/antigravity/bin")
+[[ -d "$HOME/.config/emacs/bin" ]] && path+=("$HOME/.config/emacs/bin")
 
 #-----------------
 # Integrations
@@ -108,3 +109,15 @@ pil() {
   fi
 }
 
+#------------------
+# Worktrunk
+#------------------
+
+export WORKTRUNK_PROJECT_CONFIG_PATH="local.wt.toml"
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+#------------------
+# Devenv
+#------------------
+
+eval "$(devenv hook zsh)"

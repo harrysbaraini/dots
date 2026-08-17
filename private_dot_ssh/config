@@ -2,12 +2,23 @@ Host *
     ServerAliveInterval 3600
     ServerAliveCountMax 3
 
-# Work hosts - use 1Password SSH agent
+# Access Legal
 Host al-brand-cms
   HostName 52.5.246.208
   User forge
   IdentityFile ~/.ssh/id_ed25519
 
+Host al-el-staging-aws
+  HostName 34.224.98.164
+  User forge
+  IdentityFile ~/.ssh/id_ed25519
+
+Host al-ua-app-production
+  HostName 34.194.22.82
+  User forge
+  IdentityFile ~/.ssh/id_ed25519
+
+# Valley Metro
 Host vm-website-dev
   HostName 24.144.102.117
   User forge

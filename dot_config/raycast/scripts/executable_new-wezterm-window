@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title WezTerm: Open New Window on Project
+# @raycast.mode silent
+#
+# Optional parameters:
+# @raycast.icon 💻
+$HOME/.config/scripts/new_wezterm_window.sh
