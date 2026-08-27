@@ -121,3 +121,11 @@ if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)
 #------------------
 
 eval "$(devenv hook zsh)"
+
+#------------------
+# Emacs
+##-----------------
+
+alias em='emacsclient -n "$@"'
+alias magit='emacsclient -a "" -n -e "(magit-status)"'
+alias roam="emacsclient --eval '(+org-capture/open-frame INITIAL-INPUT KEY)'"

@@ -1,19 +1,5 @@
 ;;; $DOOMDIR/init.el -*- lexical-binding: t; -*-
 
-;; This file controls what Doom modules are enabled and what order they load
-;; in. Remember to run 'doom sync' after modifying it!
-
-;; NOTE: Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
-;;   documentation. There you'll find a link to Doom's Module Index where all of
-;;   our modules are listed, including what flags they support.
-
-;; NOTE: Move your cursor over a module's name (or its flags) and press 'K' (or
-;;   'C-c c k' for non-vim users) to view its documentation. This works on flags
-;;   as well (those symbols that start with a plus).
-;;
-;;   Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
-;;   directory (for easy access to its source code).
-
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese
@@ -74,7 +60,7 @@
        ;;eww               ; the internet is gross
        ;;ibuffer           ; interactive buffer management
        tramp             ; remote files at your arthritic fingertips
-       undo              ; persistent, smarter undo for your inevitable mistakes
+       (undo +tree)              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
@@ -105,7 +91,7 @@
        magit             ; a git porcelain for Emacs
        ;;make ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
-       ;;pdf               ; pdf enhancements
+       pdf               ; pdf enhancements
        terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        (tree-sitter +everywhere)       ; syntax and parsing, sitting in a tree...
@@ -159,7 +145,7 @@
        nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        ;;odin              ; C, minus its footguns
-       (org +roam)               ; organize your plain life in plain text
+       (org +roam +pretty +hugo)               ; organize your plain life in plain text
        (php +lsp +tree-sitter)               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;graphviz          ; diagrams for confusing yourself even more
@@ -168,7 +154,7 @@
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
-       ;;rest              ; Emacs as a REST client
+       rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;(rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()

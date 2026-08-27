@@ -5,7 +5,7 @@ VERSION="1.11.0"
 
 KANATA_BIN="{{ .chezmoi.homeDir }}/.local/bin/kanata"
 CONFIG_PATH="{{ .chezmoi.homeDir }}/.config/kanata/kanata.kbd"
-PLIST_PATH="/Library/LaunchDaemons/com.kanata.daemon.plist"
+PLIST_PATH="{{ .chezmoi.homeDir }}/Library/LaunchAgents/com.kanata.daemon.plist"
 
 # Install Kanata with cmd enabled
 
@@ -29,31 +29,35 @@ sudo tee "$PLIST_PATH" > /dev/null << EOF
 <dict>
     <key>Label</key>
     <string>com.kanata.daemon</string>
+
     <key>ProgramArguments</key>
     <array>
         <string>${KANATA_BIN}</string>
         <string>--cfg</string>
         <string>${CONFIG_PATH}</string>
     </array>
+    
     <key>RunAtLoad</key>
     <true/>
+    
     <key>KeepAlive</key>
     <dict>
         <key>Crashed</key><true/>
         <key>SuccessfulExit</key><false/>
     </dict>
+    
     <key>StandardOutPath</key>
-    <string>/var/log/kanata.out.log</string>
+    <string>/tmp/kanata.out.log</string>
+    
     <key>StandardErrorPath</key>
-    <string>/var/log/kanata.err.log</string>
+    <string>/tmp/kanata.err.log</string>
 </dict>
 </plist>
 EOF
 
-sudo chown root:wheel "$PLIST_PATH"
-sudo chmod 644 "$PLIST_PATH"
+# sudo chown root:wheel "$PLIST_PATH"
+#sudo chmod 644 "$PLIST_PATH"
 
-# bootstrap if not already loaded
-if ! sudo launchctl list | grep -q "com.kanata.daemon"; then
-    sudo launchctl bootstrap system "$PLIST_PATH"
+if ! launchctl list | grep -q "com.kanata.daemon"; then
+    launchctl load "$PLIST_PATH"
 fi

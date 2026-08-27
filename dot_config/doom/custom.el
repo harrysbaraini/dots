@@ -4,7 +4,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(doom-dark+))
+ '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
    '("0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      "3061706fa92759264751c64950df09b285e3a2d3a9db771e99bcbb2f9b470037"
@@ -82,6 +82,7 @@
      "9e5e0ff3a81344c9b1e6bfc9b3dcf9b96d5ec6a60d8de6d4c762ee9e2121dfb2"
      "f1e8339b04aef8f145dd4782d03499d9d716fdc0361319411ac2efc603249326"
      "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
+ '(package-selected-packages '(chordpro-mode))
  '(safe-local-variable-values
    '((lsp-nested-project-root-selection) (lsp-auto-guess-root)))
  '(size-indication-mode t)

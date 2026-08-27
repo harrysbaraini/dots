@@ -123,6 +123,24 @@
       "s" #'my/project-open-slack
       "b" #'my/project-open-browser)
 
+;; Automatically open recent file when opening a project
+;; (after! projectile
+;;   (defun my/projectile-open-most-recent ()
+;;     "Open the most recently visited file in the current project.
+;; If there is no recent file (e.g. first visit), fall back to `projectile-find-file'."
+;;     (let ((recent (car (projectile-recentf-files))))
+;;       (if (and recent (file-exists-p recent))
+;;           (find-file recent)
+;;         (projectile-find-file))))
+
+;;   (setq projectile-switch-project-action #'my/projectile-open-most-recent))
+
+;; (after! projectile
+;;   (setq projectile-switch-project-action #'projectile-recentf))
+
+(defvar +workspaces-main "todo")
+(defvar +workspaces-switch-project-function #'magit-status)
+
 ;; =============================================================================
 ;; 1. ENVIRONMENT & DIRENV INTERACTION
 ;; =============================================================================

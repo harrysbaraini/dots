@@ -49,6 +49,7 @@ local config = {
 	keys = mappings.keys,
 	key_tables = mappings.key_tables,
 	use_dead_keys = true,
+	enable_kitty_keyboard = true,
 
 	-- neovim optimizations
 	enable_csi_u_key_encoding = true,
