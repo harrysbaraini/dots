@@ -1,5 +1,7 @@
 ;;; lisp/projects.el -*- lexical-binding: t; -*-
 
+(require 'subr-x)
+
 ;; Automatically discover projects
 (after! projectile
   (setq projectile-project-search-path
@@ -14,6 +16,113 @@
       (when-let ((project (project-current nil)))
         (project-root project))
       (user-error "This buffer is not inside a recognised project")))
+
+;; Project compilation commands
+(defcustom my/compile-multi-auto-discover t
+  "Whether compile-multi discovers commands from project manifests."
+  :type 'boolean
+  :group 'compilation)
+
+(put 'my/compile-multi-auto-discover 'safe-local-variable #'booleanp)
+
+(defun my/compile-multi--read-json (file)
+  "Return the JSON object in FILE with string-keyed hash tables."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (goto-char (point-min))
+    (condition-case err
+        (json-parse-buffer :object-type 'hash-table :array-type 'array)
+      (json-parse-error
+       (user-error "Invalid JSON in %s: %s"
+                   file (error-message-string err))))))
+
+(defun my/compile-multi--script-names (manifest)
+  "Return sorted script names from MANIFEST."
+  (when-let ((scripts (gethash "scripts" manifest)))
+    (when (hash-table-p scripts)
+      (sort (hash-table-keys scripts) #'string<))))
+
+(defun my/compile-multi--package-manager (manifest)
+  "Return the package manager selected by MANIFEST in `default-directory'."
+  (let* ((missing (make-symbol "missing"))
+         (package-manager (gethash "packageManager" manifest missing)))
+    (if (eq package-manager missing)
+        (cond
+         ((file-exists-p "yarn.lock") "yarn")
+         ((or (file-exists-p "package-lock.json")
+              (file-exists-p "npm-shrinkwrap.json"))
+          "npm")
+         (t "npm"))
+      (cond
+       ((and (stringp package-manager)
+             (string-match-p "\\`yarn\\(?:@.*\\)?\\'" package-manager))
+        "yarn")
+       ((and (stringp package-manager)
+             (string-match-p "\\`npm\\(?:@.*\\)?\\'" package-manager))
+        "npm")))))
+
+(defun my/compile-multi--script-tasks (group argv scripts)
+  "Build compile-multi tasks in GROUP from ARGV and SCRIPTS."
+  (mapcar
+   (lambda (script)
+     (cons (format "%s:%s" group script)
+           (mapconcat #'shell-quote-argument
+                      (append argv (list script))
+                      " ")))
+   scripts))
+
+(defun my/compile-multi--auto-tasks ()
+  "Discover compile-multi tasks in the current project root."
+  (let ((package-json (expand-file-name "package.json"))
+        (composer-json (expand-file-name "composer.json"))
+        tasks)
+    (when (file-exists-p package-json)
+      (let* ((manifest (my/compile-multi--read-json package-json))
+             (scripts (my/compile-multi--script-names manifest))
+             (package-manager (my/compile-multi--package-manager manifest)))
+        (when package-manager
+          (setq tasks
+                (append tasks
+                        (my/compile-multi--script-tasks
+                         package-manager
+                         (list package-manager "run")
+                         scripts))))))
+    (when (file-exists-p composer-json)
+      (setq tasks
+            (append tasks
+                    (my/compile-multi--script-tasks
+                     "composer"
+                     '("composer" "run-script")
+                     (my/compile-multi--script-names
+                      (my/compile-multi--read-json composer-json))))))
+    (when (file-exists-p "devenv.nix")
+      (setq tasks
+            (append tasks
+                    '(("devenv:up" . "devenv up --model all")
+                      ("devenv:test" . "devenv test")))))
+    tasks))
+
+(defun my/compile-multi--supported-manifest-p ()
+  "Return non-nil when the current directory supports command discovery."
+  (or (file-exists-p "package.json")
+      (file-exists-p "composer.json")
+      (file-exists-p "devenv.nix")))
+
+(use-package! compile-multi
+  :commands compile-multi
+  :init
+  (map! :leader :desc "Compile project command" "p c" #'compile-multi)
+  :config
+  (setq compile-multi-default-directory #'doom-project-root
+        compile-multi-config
+        `(((and my/compile-multi-auto-discover
+                (my/compile-multi--supported-manifest-p))
+           ,#'my/compile-multi--auto-tasks))))
+
+;; Per-project .dir-locals.el example:
+;; ((nil . ((my/compile-multi-auto-discover . nil)
+;;          (compile-multi-dir-local-config
+;;           . ((t ("project:check" . "bin/check")))))))
 
 (defun my/project-org-file ()
   "Return the path to project.org for the current project."

@@ -26,7 +26,6 @@
 ;; vcs
 (package! orgit)
 (package! vc-jj)
-(package! jj-mode :recipe (:host github :repo "bolivier/jj-mode.el"))
 (package! git-link :recipe (:host github :repo "sshaw/git-link"))
 (package! majutsu :recipe (:host github :repo "0WD0/majutsu"))
 
@@ -37,3 +36,6 @@
 (use-package evil-ghostel
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
+
+;; multi compile commands
+(package! compile-multi)

@@ -19,8 +19,8 @@
 
 (setq +dashboard-ascii-banner-fn #'my/custom-doom-ascii-banner)
 
-;; Hide frame
-(add-to-list 'default-frame-alist '(undecorated . t))
+;; Hide frame decorations
+;; (add-to-list 'default-frame-alist '(undecorated . t))
 
 ;; Disable top bar
 (tab-bar-mode -1)
@@ -28,8 +28,8 @@
 ;; Font settings. See 'C-h v doom-font' for documentation and more examples of what they accept.
 (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
-(setq doom-font (font-spec :family "0xProto Nerd Font" :size 16 :slant 'normal :height 1.5)
-      doom-variable-pitch-font (font-spec :family "Alegreya" :size 16 :slant 'normal :height 1.5))
+(setq doom-font (font-spec :family "0xProto Nerd Font" :size 15 :slant 'normal :height 1.5)
+      doom-variable-pitch-font (font-spec :family "Alegreya" :size 15 :slant 'normal :height 1.5))
 
 ;; Line spacing.
 (setq-default line-spacing .15)
@@ -66,8 +66,8 @@
   "Load theme based on SYSTEM APPEARANCE (light or dark)."
   (mapc #'disable-theme custom-enabled-themes)
   (pcase appearance
-    ('light (load-theme 'modus-operandi t))
-    ('dark (load-theme 'modus-vivendi t))))
+    ('light (load-theme 'doom-flatwhite t))
+    ('dark (load-theme 'doom-nord t))))
 
 (add-hook 'ns-system-appearance-change-functions #'my-apply-theme)
 
@@ -85,6 +85,15 @@
     :ensure-system-package
     ((codex-acp . "npm install -g @agentclientprotocol/codex-acp")))
 
+;; Majutsu
+(map! :leader
+      :prefix ("j" . "Majutsu")
+      :desc "Log" "j" #'majutsu
+      :desc "Diff" "d" #'majutsu-diff
+      :desc "Dwim" "w" #'majutsu-diff-dwim
+      :desc "Split" "d" #'majutsu-split
+      :desc "New" "n" #'majutsu-new)
+
 ;; PHP lsp server
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
@@ -101,3 +110,6 @@
 (load! "+clipboard")
 (load! "+dashboard")
 (load! "+projects")
+
+
+
